@@ -3,7 +3,7 @@ import "./App.css";
 
 function App() {
   const apiCall = () => {
-    axios.get("http://localhost:3000").then((data) => {
+    axios.get("https://server-ivory-pi.vercel.app/").then((data) => {
       console.log(data);
     });
   };
