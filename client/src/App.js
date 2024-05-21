@@ -1,9 +1,11 @@
 import axios from "axios";
 import "./App.css";
 
+const API_ENDPOINT = "https://server-ivory-pi.vercel.app/";
+
 function App() {
   const apiCall = () => {
-    axios.get("https://server-ivory-pi.vercel.app/").then((data) => {
+    axios.get(API_ENDPOINT).then((data) => {
       console.log(data);
     });
   };
