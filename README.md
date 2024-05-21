@@ -1,1 +1,1 @@
-# codelingo-instructor-app
+# instructor-app
