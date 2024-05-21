@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "server/api/index.js",
+      "src": "api/index.js",
       "use": "@now/node"
     }
   ],
   "routes": [
     {
-      "src": "server/api/(.*)",
-      "dest": "server/api/index.js"
+      "src": "api/(.*)",
+      "dest": "api/index.js"
     }
   ]
 }
