@@ -1,0 +1,1 @@
+{"version":3,"file":"paginator.interface.d.ts","sourceRoot":"","sources":["../../src/interfaces/paginator.interface.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,uBAAuB,CAAC;AAEhD,MAAM,WAAW,YAAY,CAAC,CAAC;IAC7B,KAAK,EAAE,CAAC,GAAG,OAAO,CAAC;IACnB,IAAI,EAAE,CAAC,GAAG,OAAO,CAAC;IAClB,IAAI,EAAE,CAAC,GAAG,OAAO,CAAC;IAClB,IAAI,EAAE,CAAC,GAAG,OAAO,CAAC;CACnB"}

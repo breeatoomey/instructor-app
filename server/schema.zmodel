@@ -1,49 +1,59 @@
-// This is a sample model to get you started.
+plugin openapi {
+    provider = '@zenstackhq/openapi'
+    prefix = '/api'
+    flavor = 'rest'
+    title = 'ACT Project API'
+    specVersion = '3.0.0'
+    version = '0.1.0'
+    description = 'ACT Project API'
+    output = 'act-project-api.json'
+    securitySchemes = { 
+        myBearer: { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }
+    }
+}
 
-/**
- * A sample data source using local sqlite db.
- */
 datasource db {
-    provider = 'sqlite'
-    url = 'file:./dev.db'
+    provider = "postgresql"
+    url = env("POSTGRES_PRISMA_URL")
+    directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 generator client {
     provider = "prisma-client-js"
 }
 
-/**
- * User model
- */
 model User {
-    id       String @id @default(cuid())
-    email    String @unique @email @length(6, 32)
+    id String @id @default(cuid())
+    email String @unique
     password String @password @omit
-    posts    Post[]
+    classrooms Classroom[]
 
     // everybody can signup
     @@allow('create', true)
 
-    // full access by self
-    @@allow('all', auth() == this)
+    // user profile is publicly readable
+    @@allow('read', true)
 }
 
-/**
- * Post model
- */
-model Post {
-    id        String   @id @default(cuid())
+model Lesson {
+    id String @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    title     String   @length(1, 256)
-    content   String
-    published Boolean  @default(false)
-    author    User     @relation(fields: [authorId], references: [id])
-    authorId  String
+    title String
+    classroom Classroom? @relation(fields: [classroomId], references: [id])
+    classroomId String?
 
-    // allow read for all signin users
-    @@allow('read', auth() != null && published)
+    @@allow('all', true)
+}
 
-    // full access by author
-    @@allow('all', author == auth())
+model Classroom {
+    id String @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    name String
+    lessons Lesson[]
+    user User? @relation(fields: [userId], references: [id])
+    userId String?
+
+    @@allow('all', true)
 }
