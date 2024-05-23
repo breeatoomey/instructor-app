@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-const data = '{ "name": "Alice", "class": "CMSI 1010, "age": 30, "email": "alice@gmail.com", "city": "New York", "skills": ["JavaScript", "Python", "Java"], "isActive": true }';
+const data = '{ "name": "Alice", "class": "CMSI 1010", "age": 30, "email": "alice@gmail.com", "city": "New York", "skills": ["JavaScript", "Python", "Java"], "isActive": true }';
 
 app.use(cors());
 
