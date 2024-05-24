@@ -3,6 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import swaggerUI from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
 import fs from 'fs';
 import path from 'path';
 
@@ -12,7 +13,7 @@ import { compareSync } from 'bcryptjs';
 import { enhance } from '@zenstackhq/runtime';
 import type { Request } from 'express';
 
-const options = { customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui.css' };
+const options = { customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css' };
 const spec = JSON.parse(
     fs.readFileSync(path.join(__dirname, '../act-project-api.json'), 'utf8')
 );
