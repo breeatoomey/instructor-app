@@ -19,9 +19,9 @@ const spec = JSON.parse(
 
 const prisma = new PrismaClient()
 const app = express();
+app.use(express.json());
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(spec, options));
-app.use(express.json());
 
 dotenv.config();
 
