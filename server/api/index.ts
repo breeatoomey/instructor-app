@@ -20,7 +20,6 @@ const spec = JSON.parse(
 const prisma = new PrismaClient()
 const app = express();
 
-app.use("/", (req, res) => res.send("Reference https://server-ivory-pi.vercel.app/api/docs/"))
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(spec, options));
 app.use(express.json());
 
@@ -66,6 +65,8 @@ app.use(
         handler: apiHandler
     })
 );
+
+app.use("/", (req, res) => res.send("Reference https://server-ivory-pi.vercel.app/api/docs/"))
 
 export default app;
 
