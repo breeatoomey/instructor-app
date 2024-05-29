@@ -6,6 +6,7 @@ import swaggerUI from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import fs from 'fs';
 import path from 'path';
+import cors from 'cors';
 
 import { PrismaClient } from '@prisma/client';
 import { ZenStackMiddleware } from '@zenstackhq/server/express';
@@ -15,16 +16,14 @@ import type { Request } from 'express';
 
 const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 
-// const options = { customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css' };
 const spec = JSON.parse(
     fs.readFileSync(path.join(__dirname, '../act-project-api.json'), 'utf8')
 );
 
 const prisma = new PrismaClient()
 const app = express();
+app.use(cors())
 app.use(express.json());
-
-// app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(spec, options));
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(spec, {
     customCss: '.swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }',
