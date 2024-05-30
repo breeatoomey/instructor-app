@@ -1,11 +1,17 @@
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Components/Login/Login.js";
 import Dashboard from "./Components/DashBoard/Dashboard.js";
 import Home from "./Components/DashBoard/DashboardComponents/Home.tsx";
-// import StudentPerformance from "./Components/Dashboard/DashboardComponents/StudentPerformance.js";
-// import Setting from "./Components/Dashboard/DashboardComponents/Setting.js";
+import StudentPerformance from "./Components/DashBoard/DashboardComponents/StudentPerformance.js";
+import Setting from "./Components/DashBoard/DashboardComponents/Setting.js";
 import Navbar from "./Components/DashBoard/Navbar.js";
 import React from "react";
+import Sidebar from "./Components/ClassPage/Sidebar.jsx";
+import Lessons from "./Components/ClassPage/Pages/Lessons.jsx";
+import AddLessons from "./Components/ClassPage/Pages/AddLessons.jsx";
+import EditKnowledgeGraph from "./Components/ClassPage/Pages/EditKnowledgeGraph.jsx";
+import Roster from "./Components/ClassPage/Pages/roster.jsx";
+import ClassroomSettings from "./Components/ClassPage/Pages/ClassroomSettings.jsx";
 
 const items = [
   {
@@ -32,15 +38,23 @@ const handleSelectItem = (item: { id: string; title: string; backgroundImage: st
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/Dashboard" element={<Dashboard />}></Route>
-        {/* <Route path="/home" element={<Home />}></Route> */}
-        <Route path="/Home" element={<Home items={items} heading="My Classes" onSelectItem={handleSelectItem} />} />
-        {/* <Route path="/StudentPerformance" element={<StudentPerformance />}></Route>
-        <Route path="/Setting" element={<Setting />}></Route> */}
-      </Routes>
+      <Router>
+        <Navbar />
+        <Sidebar />
+        <Routes>
+          <Route path="/" element={<Dashboard />}></Route>
+          {/* <Route path="/Login" element={<Login />}></Route>
+          <Route path="/Home" element={<Home items={items} heading="My Classes" onSelectItem={handleSelectItem} />} />
+          <Route path="/StudentPerformance" element={<StudentPerformance />}></Route>
+          <Route path="/Setting" element={<Setting />}></Route> */}
+          <Route path="/" />
+          <Route path="/lessons" element={<Lessons />}></Route>
+          <Route path="/addLessons" element={<AddLessons />}></Route>
+          <Route path="/editKnowledgeGraph" element={<EditKnowledgeGraph />}></Route>
+          <Route path="/roster" element={<Roster />}></Route>
+          <Route path="/classroomSettings" element={<ClassroomSettings />}></Route>
+        </Routes>
+      </Router>
     </div>
   );
 }

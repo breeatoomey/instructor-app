@@ -3,7 +3,7 @@
 // import Student_Performance from "./dashboard_pages/Student_Performance";
 // import Setting from "./dashboard_pages/Setting";
 // import Home from "./dashboard_pages/Home";
-import "./Dashboard.css";
+// import "./Dashboard.css";
 // let items = ["CMSI-1010", "CMSI-2120", "CMSI-3801"];
 let items = [];
 // const getMessage = () => {

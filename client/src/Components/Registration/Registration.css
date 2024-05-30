@@ -1,89 +1,17 @@
-/* Reset some default styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body,
-html {
-  height: 100%;
-}
-
-/* Ensure the container takes up the full viewport height */
 .registration-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  background-color: #222222;
-  color: white;
-  padding: 20px; /* Added more padding for spacing */
-  min-height: 100vh; /* Ensure it takes the full viewport height */
-  box-sizing: border-box;
+  background-color: red;
 }
 
-/* Center the registration box within the container */
 .registration-box {
-  background-color: #333333;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 400px;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 20px 0; /* Added margin for spacing from top and bottom */
+  background-color: rgb(71, 69, 66);
 }
 
-/* Adjust the logo */
-.logo-container img {
-  width: 200px; /* Adjust width as needed */
-  margin-bottom: 40px; /* Optional: add spacing */
-}
-
-/* Form group styling */
 .form-group {
-  margin-bottom: 20px;
-  width: 100%;
+  background-color: grey;
 }
 
-/* Label styling */
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-/* Input styling */
-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-/* Button styling */
-button {
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-/* Anchor tag styling */
-a {
-  color: #4caf50;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
+.button {
+  background-color: red;
 }

@@ -1,4 +1,5 @@
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import "./Dashboard.css";
 export default function Navbar() {
   return (
     <nav className="nav">
