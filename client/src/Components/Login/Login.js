@@ -2,13 +2,15 @@ import logoImage from "./../../assets/logo.png";
 import { useState } from "react";
 import axios from "axios";
 import "./Login.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import Registration from "./../Registration/Registration.jsx";
 
-const API_ENDPOINT = "https://server-ivory-pi.vercel.app/";
+const API_ENDPOINT = "https://server-ivory-pi.vercel.app/api/user";
 
 function Login() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate(); // Get the navigate function from react-router-dom
+  const [showRegistration, setShowRegistration] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,7 +21,7 @@ function Login() {
       if (response.data.success) {
         setIsLoggedIn(true);
         console.log("Login Success");
-        navigate("/dashboard"); // Navigate to the dashboard route
+        navigate("/dashboard");
       } else {
         console.error("Login Failed: ", response.data.message);
       }
@@ -30,18 +32,37 @@ function Login() {
     }
   };
 
+  const toggleRegistration = () => {
+    setShowRegistration(!showRegistration);
+  };
+
   return (
     <div className="login-container">
       <img src={logoImage} alt="CodeLingo" width="200" height="200" />
       <h1>CodeLingo</h1>
-      <h2>Log in to your Educator Account</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
-        <input type="text" id="username" name="username" placeholder="Username" />
-        <label htmlFor="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Password" />
-        <button type="submit">Log In</button>
-      </form>
+      {!showRegistration ? (
+        <>
+          <h2>Log in to your Educator Account</h2>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Username" />
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" />
+            <button type="submit">Log In</button>
+          </form>
+          <p>
+            Don't have an account? <Link onClick={toggleRegistration}>Register</Link>
+          </p>
+        </>
+      ) : (
+        <>
+          <h2>Register</h2>
+          <Registration />
+          <p>
+            Already have an account? <Link onClick={toggleRegistration}>Login</Link>
+          </p>
+        </>
+      )}
     </div>
   );
 }
