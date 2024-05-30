@@ -42,12 +42,11 @@ function App() {
         <Navbar />
         <Sidebar />
         <Routes>
-          <Route path="/" element={<Dashboard />}></Route>
-          {/* <Route path="/Login" element={<Login />}></Route>
+          {/* <Route path="/" element={<Dashboard />}></Route> */}
+          <Route path="/" element={<Login />}></Route>
           <Route path="/Home" element={<Home items={items} heading="My Classes" onSelectItem={handleSelectItem} />} />
           <Route path="/StudentPerformance" element={<StudentPerformance />}></Route>
-          <Route path="/Setting" element={<Setting />}></Route> */}
-          <Route path="/" />
+          <Route path="/Setting" element={<Setting />}></Route>
           <Route path="/lessons" element={<Lessons />}></Route>
           <Route path="/addLessons" element={<AddLessons />}></Route>
           <Route path="/editKnowledgeGraph" element={<EditKnowledgeGraph />}></Route>
