@@ -61,7 +61,7 @@ function getUser(req: Request) {
     }
 }
 
-const apiHandler = RestApiHandler({ endpoint: 'http://localhost:3000/api' })
+const apiHandler = RestApiHandler({ endpoint: 'https://server-ivory-pi.vercel.app/api' })
 
 app.use(
     '/api',
