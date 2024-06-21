@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material'
+import { TextField, Stack } from '@mui/material'
 import { useState, useEffect } from 'react'
 
 const EditKnowledgeGraph = () => {
@@ -84,7 +84,6 @@ const EditKnowledgeGraph = () => {
       const secondNode = secondInnerArr ? secondInnerArr[0] : null
       return [firstNode, secondNode]
     })
-
   console.log(nodesAtEachLevel)
   return (
     <div className="editKnowledgeGraph">
@@ -100,12 +99,16 @@ const EditKnowledgeGraph = () => {
         <input type="submit" value="Update" />
       </form>
       <div id="graph">
-        <h1>testing displaying nodes first</h1>
-        {nodesAtEachLevel.map((nodes, index) => (
-          <div key={index}>
-            {nodes[0]} {nodes[1]}
-          </div>
-        ))}
+        <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
+          {nodesAtEachLevel.map((nodes, index) => (
+            <div id={`level${index + 1}`} key={index}>
+              <div className="Node">
+                {!nodes.includes(null) ? `${nodes[0]} -->` : `${nodes[0]}`}
+              </div>
+              <div className="Node"> {!nodes.includes(null) ? `${nodes[1]} -->` : nodes[1]}</div>
+            </div>
+          ))}
+        </Stack>
       </div>
     </div>
   )
