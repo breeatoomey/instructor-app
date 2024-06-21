@@ -1,17 +1,16 @@
-import { Box, Paper, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 import { useState, useEffect } from 'react'
 
 const EditKnowledgeGraph = () => {
-  const [input, setInput] = useState('== Level 1 ==\nA --> B\nA --> C\n== Level 2 ==\nB --> C')
+  const [input, setInput] = useState(
+    '== Level 1 ==\nTypes --> Variables\nExpressions --> Conditionals\n== Level 2 ==\nVariables --> Iteration\nConditionals --> Iteration\n== Level 3 ==\nIteration'
+  )
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
 
-  const submitForm = event => {
-    event.preventDefault()
-    console.log(input)
+  const parseInput = input => {
     const nodesFromInput = new Set()
     const edgesFromInput = new Set()
-    // parsing input
     input
       .split('\n')
       .filter(line => line !== '' && line !== ' ')
@@ -26,12 +25,14 @@ const EditKnowledgeGraph = () => {
           edgesFromInput.add(edge)
         }
       })
-    console.log('nodesFromInput', nodesFromInput)
-    console.log('edgesFromInput', edgesFromInput)
+    return [nodesFromInput, edgesFromInput]
+  }
+
+  const submitForm = event => {
+    event.preventDefault()
+    const [nodesFromInput, edgesFromInput] = parseInput(input)
     setNodes(Array.from(nodesFromInput))
     setEdges(Array.from(edgesFromInput))
-    console.log('nodes', nodes)
-    console.log('edges', edges)
   }
   // posting graph to knowledge graph datastore
   useEffect(() => {
@@ -65,14 +66,32 @@ const EditKnowledgeGraph = () => {
     }
   }, [nodes, edges])
 
-  console.log('nodes', nodes)
-  console.log('edges', edges)
+  const s = /==\s*Level\s*\d+\s*==/
+  const nodesAtEachLevel = input
+    .split(s)
+    .map(line => line.trim().split('\n'))
+    .filter(arr => !arr.includes(''))
+    .map(arr => arr.map(line => line.split(' --> ')))
+  // console.log(nodesAtEachLevel)
+
+  const test = nodesAtEachLevel.map(arr => {
+    const [firstInnerArr, secondInnerArr] = arr
+    const firstNode = firstInnerArr[0]
+    const secondNode = secondInnerArr ? secondInnerArr[0] : null
+    return [firstNode, secondNode]
+    // console.log('firstNode')
+    // console.log(firstNode)
+    // console.log('secondNode')
+    // console.log(secondNode)
+  })
+
+  console.log(test)
   return (
     <div className="editKnowledgeGraph">
       <h1> Edit Knowledge Graph </h1>
-      <form onSubmit={submitForm}>
+      <form id="graph-input" onSubmit={submitForm}>
         <TextField
-          label="Overview"
+          label="Knowledge Graph"
           value={input}
           onChange={event => setInput(event.target.value)}
           multiline
@@ -80,7 +99,12 @@ const EditKnowledgeGraph = () => {
         />
         <input type="submit" value="Update" />
       </form>
-      <div id="graph">graph goes here</div>
+      <div id="graph">
+        <h1>testing displaying nodes first</h1>
+        <div>
+          {nodesAtEachLevel.map(arr => arr.map((line, index) => <div key={index}>{line[0]}</div>))}
+        </div>
+      </div>
     </div>
   )
 }
