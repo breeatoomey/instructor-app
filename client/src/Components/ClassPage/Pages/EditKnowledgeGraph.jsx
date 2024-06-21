@@ -20,9 +20,13 @@ const EditKnowledgeGraph = () => {
             .trim()
             .split(' --> ')
             .filter(edge => edge !== ' ')
+          console.log('edge')
+          console.log(edge)
           nodesFromInput.add(edge[0])
-          nodesFromInput.add(edge[1])
-          edgesFromInput.add(edge)
+          if (edge[1] !== undefined) {
+            nodesFromInput.add(edge[1])
+            edgesFromInput.add(edge)
+          }
         }
       })
     return [nodesFromInput, edgesFromInput]
@@ -31,6 +35,8 @@ const EditKnowledgeGraph = () => {
   const submitForm = event => {
     event.preventDefault()
     const [nodesFromInput, edgesFromInput] = parseInput(input)
+    console.log(nodesFromInput)
+    console.log(edgesFromInput)
     setNodes(Array.from(nodesFromInput))
     setEdges(Array.from(edgesFromInput))
   }
@@ -66,26 +72,20 @@ const EditKnowledgeGraph = () => {
     }
   }, [nodes, edges])
 
-  const s = /==\s*Level\s*\d+\s*==/
+  const regex = /==\s*Level\s*\d+\s*==/
   const nodesAtEachLevel = input
-    .split(s)
+    .split(regex)
     .map(line => line.trim().split('\n'))
     .filter(arr => !arr.includes(''))
     .map(arr => arr.map(line => line.split(' --> ')))
-  // console.log(nodesAtEachLevel)
+    .map(arr => {
+      const [firstInnerArr, secondInnerArr] = arr
+      const firstNode = firstInnerArr[0]
+      const secondNode = secondInnerArr ? secondInnerArr[0] : null
+      return [firstNode, secondNode]
+    })
 
-  const test = nodesAtEachLevel.map(arr => {
-    const [firstInnerArr, secondInnerArr] = arr
-    const firstNode = firstInnerArr[0]
-    const secondNode = secondInnerArr ? secondInnerArr[0] : null
-    return [firstNode, secondNode]
-    // console.log('firstNode')
-    // console.log(firstNode)
-    // console.log('secondNode')
-    // console.log(secondNode)
-  })
-
-  console.log(test)
+  console.log(nodesAtEachLevel)
   return (
     <div className="editKnowledgeGraph">
       <h1> Edit Knowledge Graph </h1>
@@ -101,9 +101,11 @@ const EditKnowledgeGraph = () => {
       </form>
       <div id="graph">
         <h1>testing displaying nodes first</h1>
-        <div>
-          {nodesAtEachLevel.map(arr => arr.map((line, index) => <div key={index}>{line[0]}</div>))}
-        </div>
+        {nodesAtEachLevel.map((nodes, index) => (
+          <div key={index}>
+            {nodes[0]} {nodes[1]}
+          </div>
+        ))}
       </div>
     </div>
   )
