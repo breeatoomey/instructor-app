@@ -81,10 +81,11 @@ const EditKnowledgeGraph = () => {
     .map(arr => {
       const [firstInnerArr, secondInnerArr] = arr
       const firstNode = firstInnerArr[0]
-      const secondNode = secondInnerArr ? secondInnerArr[0] : null
+      const secondNode = secondInnerArr ? secondInnerArr[0] : ''
       return [firstNode, secondNode]
     })
   console.log(nodesAtEachLevel)
+  console.log(nodesAtEachLevel.length)
   return (
     <div className="editKnowledgeGraph">
       <h1> Edit Knowledge Graph </h1>
@@ -102,10 +103,15 @@ const EditKnowledgeGraph = () => {
         <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
           {nodesAtEachLevel.map((nodes, index) => (
             <div id={`level${index + 1}`} key={index}>
+              Level {index + 1}
               <div className="Node">
-                {!nodes.includes(null) ? `${nodes[0]} -->` : `${nodes[0]}`}
+                {/* {!nodes.includes(null) ? `${nodes[0]} -->` : `${nodes[0]}`} */}
+                {index + 1 === nodesAtEachLevel.length ? `${nodes[0]}` : `${nodes[0]}-->`}
               </div>
-              <div className="Node"> {!nodes.includes(null) ? `${nodes[1]} -->` : nodes[1]}</div>
+              <div className="Node">
+                {/* {!nodes.includes(null) ? `${nodes[1]} -->` : nodes[1]} */}
+                {index + 1 === nodesAtEachLevel.length ? `${nodes[1]}` : `${nodes[1]}-->`}
+              </div>
             </div>
           ))}
         </Stack>
