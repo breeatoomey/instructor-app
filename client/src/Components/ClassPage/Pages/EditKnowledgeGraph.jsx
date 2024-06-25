@@ -1,12 +1,46 @@
 import { TextField, Stack } from '@mui/material'
 import { useState, useEffect } from 'react'
 
+import ReactFlow from 'reactflow'
+import 'reactflow/dist/style.css'
+
+const initialNodes = [
+  {
+    id: '1',
+    type: 'input',
+    data: { label: 'Input Node' },
+    position: { x: 250, y: 25 },
+  },
+
+  {
+    id: '2',
+    // you can also pass a React component as a label
+    data: { label: <div>Default Node</div> },
+    position: { x: 100, y: 125 },
+  },
+  {
+    id: '3',
+    type: 'output',
+    data: { label: 'Output Node' },
+    position: { x: 250, y: 250 },
+  },
+]
+
+const initialEdges = [
+  { id: 'e1-2', source: '1', target: '2' },
+  { id: 'e2-3', source: '2', target: '3', animated: true },
+]
+
 const EditKnowledgeGraph = () => {
   const [input, setInput] = useState(
     '== Level 1 ==\nTypes --> Variables\nExpressions --> Conditionals\nA --> B\n== Level 2 ==\nVariables --> Iteration\nConditionals --> Iteration\nB --> C\n== Level 3 ==\nIteration\nC'
   )
-  const [nodes, setNodes] = useState([])
-  const [edges, setEdges] = useState([])
+  const [nodesFromInput, setNodesFromInput] = useState([])
+  const [edgesFromInput, setEdgesFromInput] = useState([])
+  // const [nodesForDisplay, setNodesForDisplay] = useState([])
+  // const [edgesForDisplay, setEdgesForDisplay] = useState([])
+  const [nodesForDisplay, setNodesForDisplay] = useState(initialNodes)
+  const [edgesForDisplay, setEdgesForDisplay] = useState(initialEdges)
 
   /**
    * Parses the user's input and returns an array of arrays, where each sub-array represents a level in the graph.
@@ -37,8 +71,8 @@ const EditKnowledgeGraph = () => {
   }
 
   const parseInput = input => {
-    const nodesFromInput = new Set()
-    const edgesFromInput = new Set()
+    const nodes = new Set()
+    const edges = new Set()
     input
       .split('\n')
       .filter(line => line !== '' && line !== ' ')
@@ -48,21 +82,42 @@ const EditKnowledgeGraph = () => {
             .trim()
             .split(' --> ')
             .filter(edge => edge !== ' ')
-          nodesFromInput.add(edge[0])
+          nodes.add(edge[0])
           if (edge[1] !== undefined) {
-            nodesFromInput.add(edge[1])
-            edgesFromInput.add(edge)
+            nodes.add(edge[1])
+            edges.add(edge)
           }
         }
       })
-    return [nodesFromInput, edgesFromInput]
+    return [nodes, edges]
   }
   const submitForm = event => {
     event.preventDefault()
-    const [nodesFromInput, edgesFromInput] = parseInput(input)
-    setNodes(Array.from(nodesFromInput))
-    setEdges(Array.from(edgesFromInput))
+    const [nodes, edges] = parseInput(input)
+    setNodesFromInput(Array.from(nodes))
+    setEdgesFromInput(Array.from(edges))
   }
+
+  // useEffect(() => {
+  //   setNodesForDisplay(
+  //     nodesFromInput.map(node => {
+  //       return { id: node, data: { label: node }, position: { x: 100, y: 100 } }
+  //     })
+  //   )
+  //   console.log('nodesForDisplay')
+  //   console.log(nodesForDisplay)
+
+  //   setEdgesForDisplay(
+  //     edgesFromInput.map(edges => {
+  //       const id = `e${edges[0]}-${edges[1]}`
+  //       const source = `${edges[0]}`
+  //       const target = `${edges[1]}`
+  //       return { id, source, target, animated: true }
+  //     })
+  //   )
+  //   console.log('edgesForDisplay')
+  //   console.log(edgesForDisplay)
+  // }, [nodesFromInput, edgesFromInput])
   // posting graph to knowledge graph datastore
   useEffect(() => {
     const updateAndPostGraph = async (nodes, edges) => {
@@ -74,8 +129,8 @@ const EditKnowledgeGraph = () => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              nodes: nodes,
-              edges: edges,
+              nodes: nodesFromInput,
+              edges: edgesFromInput,
               class_name: 'CS-101',
               graph_name: 'class_avg_kg',
             }),
@@ -87,16 +142,15 @@ const EditKnowledgeGraph = () => {
         }
       }
     }
-    updateAndPostGraph(nodes, edges)
+    updateAndPostGraph(nodesFromInput, edgesFromInput)
     // resetting states
-    if (nodes.length > 0 && edges.length > 0) {
-      setNodes([])
-      setEdges([])
+    if (nodesFromInput.length > 0 && edgesFromInput.length > 0) {
+      setNodesFromInput([])
+      setEdgesFromInput([])
     }
-  }, [nodes, edges])
+  }, [nodesFromInput, edgesFromInput])
 
   const nodesToDisplay = getNodesAtEachLevel(input).map(level => Array.from(new Set(level)))
-
   // console.log(nodesToDisplay)
 
   return (
@@ -112,21 +166,26 @@ const EditKnowledgeGraph = () => {
         />
         <input type="submit" value="Update" />
       </form>
-      <div id="graph">
-        <Stack alignItems="center" spacing={2}>
-          {nodesToDisplay.map((level, index) => {
-            return (
-              <Stack direction="row" id={`Level ${index + 1}`} spacing={8} key={index}>
-                {level.map((node, index) => (
-                  <div id={`${node}`} key={index}>
-                    {node}
-                  </div>
-                ))}
-              </Stack>
-            )
-          })}
-        </Stack>
-      </div>
+      <Stack direction="row" justifyContent="center" spacing={10}>
+        <div id="simple-graph">
+          <Stack alignItems="center" spacing={8}>
+            {nodesToDisplay.map((level, index) => {
+              return (
+                <Stack direction="row" id={`Level ${index + 1}`} spacing={8} key={index}>
+                  {level.map((node, index) => (
+                    <div id={`${node}`} key={index}>
+                      {node}
+                    </div>
+                  ))}
+                </Stack>
+              )
+            })}
+          </Stack>
+        </div>
+        <div id="better-graph" style={{ backgroundColor: 'aquamarine', height: 500, width: 500 }}>
+          <ReactFlow nodes={nodesForDisplay} edges={edgesForDisplay} />
+        </div>
+      </Stack>
     </div>
   )
 }
