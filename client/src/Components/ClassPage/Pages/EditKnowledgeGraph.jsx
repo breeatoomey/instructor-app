@@ -1,46 +1,19 @@
 import { TextField, Stack } from '@mui/material'
 import { useState, useEffect } from 'react'
-
 import ReactFlow from 'reactflow'
 import 'reactflow/dist/style.css'
 
-const initialNodes = [
-  {
-    id: '1',
-    type: 'input',
-    data: { label: 'Input Node' },
-    position: { x: 250, y: 25 },
-  },
-
-  {
-    id: '2',
-    // you can also pass a React component as a label
-    data: { label: <div>Default Node</div> },
-    position: { x: 100, y: 125 },
-  },
-  {
-    id: '3',
-    type: 'output',
-    data: { label: 'Output Node' },
-    position: { x: 250, y: 250 },
-  },
-]
-
-const initialEdges = [
-  { id: 'e1-2', source: '1', target: '2' },
-  { id: 'e2-3', source: '2', target: '3', animated: true },
-]
-
+import KnowledgeGraph from './Graph'
 const EditKnowledgeGraph = () => {
   const [input, setInput] = useState(
-    '== Level 1 ==\nTypes --> Variables\nExpressions --> Conditionals\nA --> B\n== Level 2 ==\nVariables --> Iteration\nConditionals --> Iteration\nB --> C\n== Level 3 ==\nIteration\nC'
+    '== Level 1 ==\nTypes --> Variables\nExpressions --> Conditionals\nScope --> Lists\n== Level 2 ==\nVariables --> Iteration\nConditionals --> Iteration\nLists --> Random Access\n== Level 3 ==\nIteration\nRandom Access\n'
   )
   const [nodesFromInput, setNodesFromInput] = useState([])
   const [edgesFromInput, setEdgesFromInput] = useState([])
-  // const [nodesForDisplay, setNodesForDisplay] = useState([])
-  // const [edgesForDisplay, setEdgesForDisplay] = useState([])
-  const [nodesForDisplay, setNodesForDisplay] = useState(initialNodes)
-  const [edgesForDisplay, setEdgesForDisplay] = useState(initialEdges)
+  const [nodesForDisplay, setNodesForDisplay] = useState([])
+  const [edgesForDisplay, setEdgesForDisplay] = useState([])
+  // const [nodesForDisplay, setNodesForDisplay] = useState(initialNodes)
+  // const [edgesForDisplay, setEdgesForDisplay] = useState(initialEdges)
 
   /**
    * Parses the user's input and returns an array of arrays, where each sub-array represents a level in the graph.
@@ -96,28 +69,23 @@ const EditKnowledgeGraph = () => {
     const [nodes, edges] = parseInput(input)
     setNodesFromInput(Array.from(nodes))
     setEdgesFromInput(Array.from(edges))
+
+    // FIXME: Maybe retrieve the info of nodes and edges from server once the user submits the form and graph is added??
+    setNodesForDisplay(
+      nodesFromInput.map(node => {
+        return { id: node, data: { label: node }, position: { x: 100, y: 100 } }
+      })
+    )
+    setEdgesForDisplay(
+      edgesFromInput.map(edges => {
+        const id = `e${edges[0]}-${edges[1]}`
+        const source = `${edges[0]}`
+        const target = `${edges[1]}`
+        return { id, source, target, animated: true }
+      })
+    )
   }
 
-  // useEffect(() => {
-  //   setNodesForDisplay(
-  //     nodesFromInput.map(node => {
-  //       return { id: node, data: { label: node }, position: { x: 100, y: 100 } }
-  //     })
-  //   )
-  //   console.log('nodesForDisplay')
-  //   console.log(nodesForDisplay)
-
-  //   setEdgesForDisplay(
-  //     edgesFromInput.map(edges => {
-  //       const id = `e${edges[0]}-${edges[1]}`
-  //       const source = `${edges[0]}`
-  //       const target = `${edges[1]}`
-  //       return { id, source, target, animated: true }
-  //     })
-  //   )
-  //   console.log('edgesForDisplay')
-  //   console.log(edgesForDisplay)
-  // }, [nodesFromInput, edgesFromInput])
   // posting graph to knowledge graph datastore
   useEffect(() => {
     const updateAndPostGraph = async (nodes, edges) => {
@@ -143,6 +111,7 @@ const EditKnowledgeGraph = () => {
       }
     }
     updateAndPostGraph(nodesFromInput, edgesFromInput)
+
     // resetting states
     if (nodesFromInput.length > 0 && edgesFromInput.length > 0) {
       setNodesFromInput([])
@@ -156,35 +125,19 @@ const EditKnowledgeGraph = () => {
   return (
     <div className="editKnowledgeGraph">
       <h1> Edit Knowledge Graph </h1>
-      <form id="graph-input" onSubmit={submitForm}>
-        <TextField
-          label="Knowledge Graph"
-          value={input}
-          onChange={event => setInput(event.target.value)}
-          multiline
-          rows={8}
-        />
-        <input type="submit" value="Update" />
-      </form>
       <Stack direction="row" justifyContent="center" spacing={10}>
-        <div id="simple-graph">
-          <Stack alignItems="center" spacing={8}>
-            {nodesToDisplay.map((level, index) => {
-              return (
-                <Stack direction="row" id={`Level ${index + 1}`} spacing={8} key={index}>
-                  {level.map((node, index) => (
-                    <div id={`${node}`} key={index}>
-                      {node}
-                    </div>
-                  ))}
-                </Stack>
-              )
-            })}
-          </Stack>
-        </div>
-        <div id="better-graph" style={{ backgroundColor: 'aquamarine', height: 500, width: 500 }}>
-          <ReactFlow nodes={nodesForDisplay} edges={edgesForDisplay} />
-        </div>
+        <form id="graph-input" onSubmit={submitForm}>
+          <TextField
+            label="Knowledge Graph"
+            value={input}
+            onChange={event => setInput(event.target.value)}
+            multiline
+            rows={8}
+          />
+          <input type="submit" value="Update" />
+        </form>
+
+        <KnowledgeGraph />
       </Stack>
     </div>
   )
