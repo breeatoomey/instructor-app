@@ -27,7 +27,6 @@ const KnowledgeGraph = ({ nodesInLevels }) => {
           const position = { x: xPosLevel1, y: yPosLevel1 }
           return { id, type, data, position }
         }
-        // xPos = 100 + 200 * levelIndex
         // at last level
         if (levelIndex === nodesInLevels.length - 1) {
           xPosLevel3 += (xPosLevel3 % 2) + 200
@@ -48,12 +47,14 @@ const KnowledgeGraph = ({ nodesInLevels }) => {
   }
 
   const formatEdges = edges => {
-    return edges.map(edge => {
-      const id = `e${edge[0]}-${edge[1]}`
-      const source = `${edge[0]}`
-      const target = `${edge[1]}`
-      return { id, source, target, animated: true }
-    })
+    if (edges) {
+      return edges.map(edge => {
+        const id = `e${edge[0]}-${edge[1]}`
+        const source = `${edge[0]}`
+        const target = `${edge[1]}`
+        return { id, source, target, animated: true }
+      })
+    }
   }
 
   useEffect(() => {
@@ -72,17 +73,13 @@ const KnowledgeGraph = ({ nodesInLevels }) => {
     fetchGraph()
   }, [])
 
-  console.log('nodes')
-  console.log(nodes)
-  console.log('edges')
-  console.log(edges)
   return (
-    <div id="knowledge-graph" style={{ height: 750, width: 750 }}>
+    <div id="knowledge-graph" style={{ height: 700, width: 700 }}>
       {responseCode === 404 ? (
         <h1 id="error">Graph not found</h1>
       ) : (
         <>
-          <h2>Class Graph</h2>
+          {/* <h2>Class Graph</h2> */}
           <ReactFlow nodes={nodes} edges={edges} fitView />
         </>
       )}

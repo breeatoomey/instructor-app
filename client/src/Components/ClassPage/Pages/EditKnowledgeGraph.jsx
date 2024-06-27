@@ -1,4 +1,7 @@
-import { TextField, Stack } from '@mui/material'
+import { TextField, Stack, Typography } from '@mui/material'
+import { Card, CardContent } from '@mui/material'
+import HelpIcon from '@mui/icons-material/Help'
+
 import { useState, useEffect } from 'react'
 import KnowledgeGraph from './Graph'
 
@@ -8,6 +11,7 @@ const EditKnowledgeGraph = () => {
   )
   const [nodesFromInput, setNodesFromInput] = useState([])
   const [edgesFromInput, setEdgesFromInput] = useState([])
+  const [isHelpOpen, setIsHelpOpen] = useState(false)
 
   /**
    * Parses the user's input and returns an array of arrays, where each sub-array represents a level in the graph.
@@ -87,7 +91,7 @@ const EditKnowledgeGraph = () => {
             }),
           })
           const result = await response.json()
-          console.log('Success:', result)
+          // console.log('Success:', result)
         } catch (error) {
           console.error('error', error)
         }
@@ -103,13 +107,13 @@ const EditKnowledgeGraph = () => {
   }, [nodesFromInput, edgesFromInput])
 
   const parsedNodes = getNodesAtEachLevel(input).map(level => Array.from(new Set(level)))
-  console.log('NODES TO DISPLAY')
-  console.log(parsedNodes)
+  // console.log('NODES TO DISPLAY')
+  // console.log(parsedNodes)
 
   return (
     <div className="editKnowledgeGraph">
       <h1> Edit Knowledge Graph </h1>
-      <Stack direction="row" justifyContent="center" spacing={10}>
+      <Stack direction="row" justifyContent="space-evenly" alignItems="flex-start" spacing={10}>
         {/* add Info icon for user input */}
         <form id="graph-input" onSubmit={submitForm}>
           <TextField
@@ -119,7 +123,41 @@ const EditKnowledgeGraph = () => {
             multiline
             rows={8}
           />
-          <input type="submit" value="Update" />
+          <input type="submit" value="Update" />{' '}
+          <div id="help-container">
+            <HelpIcon id="help-button" color="info" onClick={() => setIsHelpOpen(!isHelpOpen)} />
+            {isHelpOpen ? (
+              <Card variant="outlined" sx={{ backgroundColor: '#EAECE9' }}>
+                <CardContent>
+                  <h2>How to Input Your Knowledge Graph</h2>
+                  <h3>Input Format:</h3>
+                  <ol>
+                    <li>
+                      Levels: Indicate each level using '== Level X ==', where X is the level
+                      number.
+                    </li>
+                    <li>
+                      Nodes and Relationships: Specify relationships between nodes using '-->'
+                      symbol.
+                    </li>
+                  </ol>
+                  <h3>Steps to Input Your Knowledge Graph</h3>
+                  <ol>
+                    <li>
+                      Start with Level 1: List nodes and their relationships within each level.
+                    </li>
+                    <li>
+                      Continue with Subsequent Levels: Define nodes and their relationships for each
+                      subsequent level.
+                    </li>
+                    <li>Ensure there are no cycles within your knowledge graph</li>
+                  </ol>
+                </CardContent>
+              </Card>
+            ) : (
+              ''
+            )}
+          </div>
         </form>
         <KnowledgeGraph nodesInLevels={parsedNodes ? parsedNodes : ''} />
       </Stack>
