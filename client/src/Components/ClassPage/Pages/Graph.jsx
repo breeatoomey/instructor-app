@@ -5,42 +5,56 @@ import 'reactflow/dist/style.css'
 const KnowledgeGraph = ({ nodesInLevels }) => {
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
+  // const [formattedNodes, setFormattedNodes] = useState([])
   const [responseCode, setResponseCode] = useState(404)
 
-  const formatNodes = nodes => {
-    // FIXME: hardcoding positions for now
-    let xPosLevel1 = 100
-    let yPosLevel1 = 25
-    let xPosLevel2 = 100
-    let yPosLevel2 = 100
-    let xPosLevel3 = 100
-    let yPosLevel3 = 175
+  console.log('nodesInLevels')
+  console.log(nodesInLevels)
+  const initialPostions = () => {
+    let y = -25
+    return nodesInLevels.map(() => {
+      const x = 100
+      y += 100
+      return { x, y }
+    })
+  }
 
+  const formatNodes = nodes => {
+    let initialLevelPositions = initialPostions()
     return nodesInLevels.flatMap((level, levelIndex) =>
       level.map((node, index) => {
         // at root level
         if (levelIndex === 0) {
-          xPosLevel1 += (xPosLevel1 % 2) + 200
           const id = node
           const type = 'input'
           const data = { label: node }
-          const position = { x: xPosLevel1, y: yPosLevel1 }
+          initialLevelPositions[levelIndex].x += (initialLevelPositions[levelIndex].x % 2) + 200
+          const position = {
+            x: initialLevelPositions[levelIndex].x,
+            y: initialLevelPositions[levelIndex].y,
+          }
           return { id, type, data, position }
         }
         // at last level
         if (levelIndex === nodesInLevels.length - 1) {
-          xPosLevel3 += (xPosLevel3 % 2) + 200
           const id = node
           const type = 'output'
           const data = { label: node }
-          const position = { x: xPosLevel3, y: yPosLevel3 + 250 }
+          initialLevelPositions[levelIndex].x += (initialLevelPositions[levelIndex].x % 2) + 200
+          const position = {
+            x: initialLevelPositions[levelIndex].x,
+            y: initialLevelPositions[levelIndex].y,
+          }
           return { id, type, data, position }
         }
         // at other levels
-        xPosLevel2 += (xPosLevel2 % 2) + 200
         const id = node
         const data = { label: node }
-        const position = { x: xPosLevel2, y: yPosLevel2 + 125 }
+        initialLevelPositions[levelIndex].x += (initialLevelPositions[levelIndex].x % 2) + 200
+        const position = {
+          x: initialLevelPositions[levelIndex].x,
+          y: initialLevelPositions[levelIndex].y,
+        }
         return { id, data, position }
       })
     )
@@ -65,14 +79,16 @@ const KnowledgeGraph = ({ nodesInLevels }) => {
         const data = await response.json()
         setNodes(formatNodes(data['nodes']))
         setEdges(formatEdges(data['edges']))
-        console.log('Success:', data)
+        // console.log('Success:', data)
       } catch (error) {
         console.error('error', error)
       }
     }
     fetchGraph()
-  }, [])
+  }, [nodesInLevels])
 
+  console.log('nodes')
+  console.log(nodes)
   return (
     <div id="knowledge-graph" style={{ backgroundColor: '#EAECE9', height: 700, width: 800 }}>
       {responseCode === 404 ? (

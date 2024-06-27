@@ -32,7 +32,7 @@ const EditKnowledgeGraph = () => {
    *   [[A, C], [B, D], [E, F]]
    *
    * @param {string} input - The user's input string representing the levels and nodes.
-   * @returns {Array<Array<string>>} - An array of arrays, where each sub-array contains the nodes at each level.
+   * @returns {Array<Array<string>>} - An array of arrays, where each sub-array represents a level and contains the nodes within.
    */
   const getNodesAtEachLevel = input => {
     const regex = /==\s*Level\s*\d+\s*==/
