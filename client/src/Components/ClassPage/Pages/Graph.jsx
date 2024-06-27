@@ -8,8 +8,8 @@ const KnowledgeGraph = ({ nodesInLevels }) => {
   // const [formattedNodes, setFormattedNodes] = useState([])
   const [responseCode, setResponseCode] = useState(404)
 
-  console.log('nodesInLevels')
-  console.log(nodesInLevels)
+  // console.log('nodesInLevels')
+  // console.log(nodesInLevels)
   const initialPostions = () => {
     let y = -25
     return nodesInLevels.map(() => {
@@ -87,8 +87,11 @@ const KnowledgeGraph = ({ nodesInLevels }) => {
     fetchGraph()
   }, [nodesInLevels])
 
-  console.log('nodes')
-  console.log(nodes)
+  // console.log('nodes')
+  // console.log(nodes)
+  if (nodes.length === 0 || edges.length === 0) {
+    return <h1>Loading...</h1>
+  }
   return (
     <div id="knowledge-graph" style={{ backgroundColor: '#EAECE9', height: 700, width: 800 }}>
       {responseCode === 404 ? (
