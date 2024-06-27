@@ -74,7 +74,7 @@ const KnowledgeGraph = ({ nodesInLevels }) => {
   }, [])
 
   return (
-    <div id="knowledge-graph" style={{ height: 700, width: 700 }}>
+    <div id="knowledge-graph" style={{ backgroundColor: '#EAECE9', height: 700, width: 800 }}>
       {responseCode === 404 ? (
         <h1 id="error">Graph not found</h1>
       ) : (

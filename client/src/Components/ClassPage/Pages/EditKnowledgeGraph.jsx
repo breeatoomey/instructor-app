@@ -137,8 +137,8 @@ const EditKnowledgeGraph = () => {
                       number.
                     </li>
                     <li>
-                      Nodes and Relationships: Specify relationships between nodes using '-->'
-                      symbol.
+                      {`Nodes and Relationships: Specify relationships between nodes using '-->'
+                      symbol.`}
                     </li>
                   </ol>
                   <h3>Steps to Input Your Knowledge Graph</h3>
