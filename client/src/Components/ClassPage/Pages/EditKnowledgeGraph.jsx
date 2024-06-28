@@ -1,4 +1,4 @@
-import { TextField, Stack, Typography } from '@mui/material'
+import { TextField, Stack, IconButton } from '@mui/material'
 import { Card, CardContent } from '@mui/material'
 import HelpIcon from '@mui/icons-material/Help'
 
@@ -148,7 +148,9 @@ const EditKnowledgeGraph = () => {
           />
           <Stack direction="row" spacing={8} justifyContent="space-evenly" alignItems="center">
             <div id="help-container">
-              <HelpIcon id="help-button" color="info" onClick={() => setIsHelpOpen(!isHelpOpen)} />
+              <IconButton onClick={() => setIsHelpOpen(!isHelpOpen)}>
+                <HelpIcon id="help-button" color="info" />
+              </IconButton>
               {isHelpOpen ? (
                 <Card variant="outlined" sx={{ backgroundColor: '#EAECE9' }}>
                   {helperCard}

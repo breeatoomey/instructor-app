@@ -89,7 +89,7 @@ const KnowledgeGraph = ({ nodesInLevels }) => {
 
   // console.log('nodes')
   // console.log(nodes)
-  if (nodes.length === 0 || edges.length === 0) {
+  if (!nodes || !edges) {
     return <h1>Loading...</h1>
   }
   return (
