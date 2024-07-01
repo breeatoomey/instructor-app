@@ -13,7 +13,9 @@ import EditKnowledgeGraph from './Components/ClassPage/Pages/EditKnowledgeGraph.
 import Roster from './Components/ClassPage/Pages/roster.jsx'
 import ClassroomSettings from './Components/ClassPage/Pages/ClassroomSettings.jsx'
 
-import NavbarWithMenu from './Components/DashBoard/NewNavbar.jsx'
+// stuff using MUI
+import NavbarWithMenu from './Components/NewNavbar.jsx'
+import SideMenu from './Components/ClassPage/SideMenu/SideMenu.jsx'
 
 const items = [
   {
@@ -42,17 +44,18 @@ function App() {
     <div className="App">
       <Router>
         <NavbarWithMenu />
+        <SideMenu />
         {/* <Navbar />
         <Sidebar /> */}
         <Routes>
           {/* <Route path="/" element={<Dashboard />}></Route> */}
           <Route path="/" element={<Login />} />
           <Route
-            path="/Home"
+            path="/home"
             element={<Home items={items} heading="My Classes" onSelectItem={handleSelectItem} />}
           />
-          <Route path="/StudentPerformance" element={<StudentPerformance />}></Route>
-          <Route path="/Setting" element={<Setting />}></Route>
+          <Route path="/studentPerformance" element={<StudentPerformance />}></Route>
+          <Route path="/setting" element={<Setting />}></Route>
           <Route path="/lessons" element={<Lessons />}></Route>
           <Route path="/addLessons" element={<AddLessons />}></Route>
           <Route path="/editKnowledgeGraph" element={<EditKnowledgeGraph />}></Route>
