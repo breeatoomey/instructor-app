@@ -1,10 +1,9 @@
-import { SidebarData } from './SidebarData'
 // import { Drawer } from '@mui/material'
 import { Menu, ChevronLeft } from '@mui/icons-material'
-import { FaBookReader as LessonsIcon } from 'react-icons/fa'
-import { TbBrandGraphql as KnowledgeGraphIcon } from 'react-icons/tb'
+import LessonsIcon from '@mui/icons-material/MenuBook'
+import KnowledgeGraphIcon from '@mui/icons-material/Workspaces'
 import RosterIcon from '@mui/icons-material/Groups'
-import ClassPerformaceIcon from '@mui/icons-material/Insights'
+import ClassPerformanceIcon from '@mui/icons-material/Insights'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { styled, useTheme } from '@mui/material/styles'
 import MuiDrawer from '@mui/material/Drawer'
@@ -17,6 +16,7 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { IconButton, Stack } from '@mui/material'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const drawerWidth = 240
 
@@ -93,21 +93,22 @@ const SideMenu = () => {
 
   const handleMenuOpen = () => setIsSideMenuOpen(true)
   const handleMenuClose = () => setIsSideMenuOpen(false)
+
   const sideMenuItems = [
-    'Lessons',
-    'Knowledge Graph',
-    'Roster',
-    'Class Performance',
-    'Class Settings',
+    { text: 'Lessons', icon: <LessonsIcon />, slug: 'lessons' },
+    { text: 'Knowledge Graph', icon: <KnowledgeGraphIcon />, slug: 'knowledge-graph' },
+    { text: 'Roster', icon: <RosterIcon />, slug: 'roster' },
+    { text: 'Class Performance', icon: <ClassPerformanceIcon />, slug: 'class-performance' },
+    { text: 'Class Settings', icon: <SettingsIcon />, slug: 'class-settings' },
   ]
+  const navigate = useNavigate()
 
   return (
     <div className="side-menu">
-      CLASS SIDE BAR HERE :)
       <AppBar position="fixed" open={isSideMenuOpen}>
         <Toolbar>
-          <IconButton>
-            <Menu onClick={handleMenuOpen} />
+          <IconButton onClick={handleMenuOpen}>
+            <Menu />
           </IconButton>
           <Stack direction="row" spacing={10} justifyContent="space-around">
             {/* TODO: fix this later to have proper spacing */}
@@ -124,7 +125,7 @@ const SideMenu = () => {
         </DrawerHeader>
         <div></div>
         <List>
-          {sideMenuItems.map((text, index) => (
+          {sideMenuItems.map(({ text, icon, slug }, index) => (
             <ListItem key={index} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -132,6 +133,7 @@ const SideMenu = () => {
                   justifyContent: isSideMenuOpen ? 'initial' : 'center',
                   px: 2.5,
                 }}
+                onClick={() => navigate(slug)}
               >
                 <ListItemIcon
                   sx={{
@@ -140,7 +142,7 @@ const SideMenu = () => {
                     justifyContent: 'center',
                   }}
                 >
-                  <RosterIcon />
+                  {icon}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: isSideMenuOpen ? 1 : 0 }} />
               </ListItemButton>
@@ -148,7 +150,10 @@ const SideMenu = () => {
           ))}
         </List>
       </Drawer>
-      <div>page content goes here</div>
+      <div>
+        <DrawerHeader />
+        page content goes here
+      </div>
     </div>
   )
 }

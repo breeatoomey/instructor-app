@@ -4,9 +4,9 @@ import Dashboard from './Components/DashBoard/Dashboard.js'
 import Home from './Components/DashBoard/DashboardComponents/Home.tsx'
 import StudentPerformance from './Components/DashBoard/DashboardComponents/StudentPerformance.js'
 import Setting from './Components/DashBoard/DashboardComponents/Setting.js'
-import Navbar from './Components/DashBoard/Navbar.jsx'
+// import Navbar from './Components/DashBoard/Navbar.jsx'
 import React from 'react'
-import Sidebar from './Components/ClassPage/Sidebar.jsx'
+// import Sidebar from './Components/ClassPage/Sidebar.jsx'
 import Lessons from './Components/ClassPage/Pages/Lessons.jsx'
 import AddLessons from './Components/ClassPage/Pages/AddLessons.jsx'
 import EditKnowledgeGraph from './Components/ClassPage/Pages/EditKnowledgeGraph.jsx'
@@ -14,7 +14,7 @@ import Roster from './Components/ClassPage/Pages/roster.jsx'
 import ClassroomSettings from './Components/ClassPage/Pages/ClassroomSettings.jsx'
 
 // stuff using MUI
-import NavbarWithMenu from './Components/NewNavbar.jsx'
+import Navbar from './Components/NewNavbar.jsx'
 import SideMenu from './Components/ClassPage/SideMenu/SideMenu.jsx'
 
 const items = [
@@ -43,10 +43,8 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <NavbarWithMenu />
+        <Navbar />
         <SideMenu />
-        {/* <Navbar />
-        <Sidebar /> */}
         <Routes>
           {/* <Route path="/" element={<Dashboard />}></Route> */}
           <Route path="/" element={<Login />} />
@@ -54,13 +52,13 @@ function App() {
             path="/home"
             element={<Home items={items} heading="My Classes" onSelectItem={handleSelectItem} />}
           />
-          <Route path="/studentPerformance" element={<StudentPerformance />}></Route>
+          <Route path="/class-performance" element={<StudentPerformance />}></Route>
           <Route path="/setting" element={<Setting />}></Route>
           <Route path="/lessons" element={<Lessons />}></Route>
           <Route path="/addLessons" element={<AddLessons />}></Route>
-          <Route path="/editKnowledgeGraph" element={<EditKnowledgeGraph />}></Route>
+          <Route path="/knowledge-graph" element={<EditKnowledgeGraph />}></Route>
           <Route path="/roster" element={<Roster />}></Route>
-          <Route path="/classroomSettings" element={<ClassroomSettings />}></Route>
+          <Route path="/class-settings" element={<ClassroomSettings />}></Route>
         </Routes>
       </Router>
     </div>
