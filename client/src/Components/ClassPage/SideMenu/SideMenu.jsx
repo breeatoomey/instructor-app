@@ -95,11 +95,11 @@ const SideMenu = () => {
   const handleMenuClose = () => setIsSideMenuOpen(false)
 
   const sideMenuItems = [
-    { text: 'Lessons', icon: <LessonsIcon />, slug: 'lessons' },
-    { text: 'Knowledge Graph', icon: <KnowledgeGraphIcon />, slug: 'knowledge-graph' },
-    { text: 'Roster', icon: <RosterIcon />, slug: 'roster' },
-    { text: 'Class Performance', icon: <ClassPerformanceIcon />, slug: 'class-performance' },
-    { text: 'Class Settings', icon: <SettingsIcon />, slug: 'class-settings' },
+    { text: 'Lessons', icon: <LessonsIcon />, slug: '/lessons' },
+    { text: 'Knowledge Graph', icon: <KnowledgeGraphIcon />, slug: '/knowledge-graph' },
+    { text: 'Roster', icon: <RosterIcon />, slug: '/roster' },
+    { text: 'Class Performance', icon: <ClassPerformanceIcon />, slug: '/class-performance' },
+    { text: 'Class Settings', icon: <SettingsIcon />, slug: '/class-settings' },
   ]
   const navigate = useNavigate()
 
@@ -111,9 +111,9 @@ const SideMenu = () => {
             <Menu />
           </IconButton>
           <Stack direction="row" spacing={10} justifyContent="space-around">
-            {/* TODO: fix this later to have proper spacing */}
             <h2>Class Name</h2>
-            <h2>Lessons</h2>
+            <h2>MENU ITEM NAME GOES HERE</h2>
+            <h2>ADD MENU BUTTON GOES HERE</h2>
           </Stack>
         </Toolbar>
       </AppBar>
@@ -150,10 +150,7 @@ const SideMenu = () => {
           ))}
         </List>
       </Drawer>
-      <div>
-        <DrawerHeader />
-        page content goes here
-      </div>
+      <DrawerHeader />
     </div>
   )
 }

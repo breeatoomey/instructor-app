@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Login from './Components/Login/Login.js'
+import Login from './Components/Login/Login.jsx'
 import Dashboard from './Components/DashBoard/Dashboard.js'
 import Home from './Components/DashBoard/DashboardComponents/Home.tsx'
-import StudentPerformance from './Components/DashBoard/DashboardComponents/StudentPerformance.js'
+import StudentPerformance from './Components/ClassPage/Pages/StudentPerformance.jsx'
 import Setting from './Components/DashBoard/DashboardComponents/Setting.js'
 // import Navbar from './Components/DashBoard/Navbar.jsx'
 import React from 'react'
@@ -10,12 +10,13 @@ import React from 'react'
 import Lessons from './Components/ClassPage/Pages/Lessons.jsx'
 import AddLessons from './Components/ClassPage/Pages/AddLessons.jsx'
 import EditKnowledgeGraph from './Components/ClassPage/Pages/EditKnowledgeGraph.jsx'
-import Roster from './Components/ClassPage/Pages/roster.jsx'
+import Roster from './Components/ClassPage/Pages/Roster.jsx'
 import ClassroomSettings from './Components/ClassPage/Pages/ClassroomSettings.jsx'
 
 // stuff using MUI
 import Navbar from './Components/NewNavbar.jsx'
 import SideMenu from './Components/ClassPage/SideMenu/SideMenu.jsx'
+import { useState } from 'react'
 
 const items = [
   {
@@ -37,17 +38,17 @@ const items = [
 const handleSelectItem = (item: { id: string; title: string; backgroundImage: string }) => {
   console.log(item)
 }
-//const items = [];
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   return (
     <div className="App">
       <Router>
-        <Navbar />
-        <SideMenu />
+        {isAuthenticated ? <Navbar /> : ''}
+        {/* <SideMenu /> */}
         <Routes>
           {/* <Route path="/" element={<Dashboard />}></Route> */}
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Login setAuthenticated={setIsAuthenticated} />} />
           <Route
             path="/home"
             element={<Home items={items} heading="My Classes" onSelectItem={handleSelectItem} />}

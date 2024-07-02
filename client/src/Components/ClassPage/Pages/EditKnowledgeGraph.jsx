@@ -1,9 +1,9 @@
 import { TextField, Stack, IconButton } from '@mui/material'
 import { Card, CardContent } from '@mui/material'
 import HelpIcon from '@mui/icons-material/Help'
-
 import { useState, useEffect } from 'react'
 import KnowledgeGraph from './Graph'
+import SideMenu from '../SideMenu/SideMenu'
 
 const EditKnowledgeGraph = () => {
   const [input, setInput] = useState(
@@ -135,6 +135,7 @@ const EditKnowledgeGraph = () => {
 
   return (
     <div className="editKnowledgeGraph">
+      <SideMenu />
       <h1> Edit Knowledge Graph </h1>
       <Stack direction="row" justifyContent="space-evenly" alignItems="flex-start" spacing={10}>
         {/* add Info icon for user input */}
