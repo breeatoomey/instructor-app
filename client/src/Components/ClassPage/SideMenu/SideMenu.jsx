@@ -5,6 +5,7 @@ import KnowledgeGraphIcon from '@mui/icons-material/Workspaces'
 import RosterIcon from '@mui/icons-material/Groups'
 import ClassPerformanceIcon from '@mui/icons-material/Insights'
 import SettingsIcon from '@mui/icons-material/Settings'
+import AddIcon from '@mui/icons-material/Add'
 import { styled, useTheme } from '@mui/material/styles'
 import MuiDrawer from '@mui/material/Drawer'
 import MuiAppBar from '@mui/material/AppBar'
@@ -14,7 +15,7 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import { IconButton, Stack } from '@mui/material'
+import { IconButton, Stack, Fab, Tooltip } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -87,7 +88,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })
   })
 )
 
-const SideMenu = () => {
+const SideMenu = ({ isLessonPage }) => {
   const theme = useTheme()
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
 
@@ -107,13 +108,23 @@ const SideMenu = () => {
     <div className="side-menu">
       <AppBar position="fixed" open={isSideMenuOpen}>
         <Toolbar>
-          <IconButton onClick={handleMenuOpen}>
-            <Menu />
-          </IconButton>
-          <Stack direction="row" spacing={10} justifyContent="space-around">
+          <Stack direction="row" spacing={10} justifyContent="center" alignItems="center">
+            <IconButton onClick={handleMenuOpen}>
+              <Menu />
+            </IconButton>
             <h2>Class Name</h2>
             <h2>MENU ITEM NAME GOES HERE</h2>
-            <h2>ADD MENU BUTTON GOES HERE</h2>
+            {isLessonPage ? (
+              <>
+                <Tooltip title="Add Lesson">
+                  <Fab variant="extended" color="white" onClick={() => navigate('/add-lessons')}>
+                    <AddIcon />
+                  </Fab>
+                </Tooltip>
+              </>
+            ) : (
+              ''
+            )}
           </Stack>
         </Toolbar>
       </AppBar>
@@ -123,7 +134,6 @@ const SideMenu = () => {
             {theme.direction === 'ltr' ? <ChevronLeft /> : ''}
           </IconButton>
         </DrawerHeader>
-        <div></div>
         <List>
           {sideMenuItems.map(({ text, icon, slug }, index) => (
             <ListItem key={index} disablePadding sx={{ display: 'block' }}>
@@ -150,7 +160,7 @@ const SideMenu = () => {
           ))}
         </List>
       </Drawer>
-      <DrawerHeader />
+      {/* <DrawerHeader /> */}
     </div>
   )
 }

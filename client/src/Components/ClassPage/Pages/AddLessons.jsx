@@ -1,9 +1,11 @@
-import React from "react";
+import React from 'react'
 
-export default function AddLessons() {
+const AddLessons = () => {
   return (
     <div className="addLessons">
       <h1>Add Lessons</h1>
     </div>
-  );
+  )
 }
+
+export default AddLessons

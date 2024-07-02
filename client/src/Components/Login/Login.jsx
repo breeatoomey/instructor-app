@@ -21,11 +21,12 @@ const Login = ({ setAuthenticated }) => {
       if (response.data.success) {
         setIsLoggedIn(true)
         console.log('Login Success')
-        navigate('/dashboard')
+        navigate('/home')
       } else {
         console.error('Login Failed: ', response.data.message)
       }
     } catch (error) {
+      // FIXME: come back and fix this bc this is just for production
       setAuthenticated(true)
       navigate('/home')
       console.error('Login failed:', error)

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { useState } from 'react'
 import Login from './Components/Login/Login.jsx'
-import Dashboard from './Components/DashBoard/Dashboard.js'
+// import Dashboard from './Components/DashBoard/Dashboard.js'
 import Home from './Components/DashBoard/DashboardComponents/Home.tsx'
 import StudentPerformance from './Components/ClassPage/Pages/StudentPerformance.jsx'
 import Setting from './Components/DashBoard/DashboardComponents/Setting.js'
@@ -15,8 +16,7 @@ import ClassroomSettings from './Components/ClassPage/Pages/ClassroomSettings.js
 
 // stuff using MUI
 import Navbar from './Components/NewNavbar.jsx'
-import SideMenu from './Components/ClassPage/SideMenu/SideMenu.jsx'
-import { useState } from 'react'
+import Lesson from './Components/ClassPage/Pages/Lesson.jsx'
 
 const items = [
   {
@@ -41,11 +41,11 @@ const handleSelectItem = (item: { id: string; title: string; backgroundImage: st
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  // TODO: once user is authenticated, fetch user data and pass in relevant data to components as props?
   return (
     <div className="App">
       <Router>
         {isAuthenticated ? <Navbar /> : ''}
-        {/* <SideMenu /> */}
         <Routes>
           {/* <Route path="/" element={<Dashboard />}></Route> */}
           <Route path="/" element={<Login setAuthenticated={setIsAuthenticated} />} />
@@ -56,10 +56,11 @@ function App() {
           <Route path="/class-performance" element={<StudentPerformance />}></Route>
           <Route path="/setting" element={<Setting />}></Route>
           <Route path="/lessons" element={<Lessons />}></Route>
-          <Route path="/addLessons" element={<AddLessons />}></Route>
+          <Route path="/add-lessons" element={<AddLessons />}></Route>
           <Route path="/knowledge-graph" element={<EditKnowledgeGraph />}></Route>
           <Route path="/roster" element={<Roster />}></Route>
           <Route path="/class-settings" element={<ClassroomSettings />}></Route>
+          <Route path="/lesson" element={<Lesson />}></Route>
         </Routes>
       </Router>
     </div>

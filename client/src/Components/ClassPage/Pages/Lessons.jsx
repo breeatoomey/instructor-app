@@ -1,7 +1,7 @@
 import React from 'react'
 import SideMenu from '../SideMenu/SideMenu'
 import { Box, Paper, Typography } from '@mui/material'
-
+import { useNavigate } from 'react-router-dom'
 // using mock data for now
 // TODO: fetch lessons from the server
 const mockLessons = [
@@ -55,41 +55,55 @@ const mockLessons = [
     description: 'This is the tenth lesson',
     id: 10,
   },
+  {
+    title: 'Lesson 11',
+    description: 'This is the eleventh lesson',
+    id: 11,
+  },
+  {
+    title: 'Lesson 12',
+    description: 'This is the twelfth lesson',
+    id: 12,
+  },
 ]
 
 const Lessons = () => {
+  const navigate = useNavigate()
   return (
     <div className="lessons">
-      <SideMenu></SideMenu>
-      <h1>Lessons</h1>
-      {mockLessons.map((lesson, index) => {
-        return (
-          <Box
-            key={index}
-            sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-            }}
-          >
+      <SideMenu isLessonPage={true} />
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          backgroundColor: '#EAECE9',
+          height: '100vh',
+          padding: 7,
+        }}
+      >
+        {mockLessons.map((lesson, index) => {
+          return (
             <Paper
-              elevation={2}
+              key={index}
+              elevation={4}
               sx={{
                 width: 250,
                 height: 100,
-                margin: 1,
+                margin: 5,
+                padding: 1,
                 '&:hover': {
                   backgroundColor: '#f5f5f5',
                   cursor: 'pointer',
                 },
               }}
-              onClick={() => console.log(`Lesson ${lesson.id} clicked`)}
+              onClick={() => navigate('/lesson')}
             >
               {lesson.title}
-            </Paper>{' '}
-          </Box>
-        )
-      })}
+            </Paper>
+          )
+        })}
+      </Box>
     </div>
   )
 }
