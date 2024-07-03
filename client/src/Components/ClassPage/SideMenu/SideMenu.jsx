@@ -109,10 +109,10 @@ const SideMenu = ({ isLessonPage }) => {
       <AppBar position="fixed" open={isSideMenuOpen}>
         <Toolbar>
           <Stack direction="row" spacing={10} justifyContent="center" alignItems="center">
-            <IconButton onClick={handleMenuOpen}>
+            <IconButton onClick={handleMenuOpen} sx={{ color: 'white' }}>
               <Menu />
             </IconButton>
-            <h2>Class Name</h2>
+            <h2 onClick={() => navigate('/home')}>Class Name</h2>
             <h2>MENU ITEM NAME GOES HERE</h2>
             {isLessonPage ? (
               <>
