@@ -4,8 +4,8 @@ import { useState } from 'react'
 
 const steps = ['Lesson Structure', 'Lesson Questions', 'Review Lesson']
 
-const LessonStepper = () => {
-  const [activeStep, setActiveStep] = useState(0)
+const LessonStepper = ({ activeStep, setActiveStep }) => {
+  //   const [activeStep, setActiveStep] = useState(0)
 
   const handleNextStep = () => setActiveStep(prevActiveStep => prevActiveStep + 1)
   const handleBackStep = () => setActiveStep(prevActiveStep => prevActiveStep - 1)
@@ -27,7 +27,10 @@ const LessonStepper = () => {
         <Box sx={{ flex: '1 1 auto' }} />
         {activeStep === steps.length - 1 ? (
           <>
-            <Button variant="contained" onClick={() => console.log('stepper finished')}>
+            <Button
+              variant="contained"
+              onClick={() => alert('stepper finished. redirect to lesson page later.')}
+            >
               Finish
             </Button>
           </>
