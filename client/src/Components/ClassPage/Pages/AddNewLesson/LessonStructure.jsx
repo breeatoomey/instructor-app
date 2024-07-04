@@ -1,37 +1,55 @@
 import { useState } from 'react'
 import { Box, TextField, MenuItem, Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 
-const questionOptions = [...Array.from({ length: 10 }, (v, i) => i + 1)]
-const mockTopics = [
-  'Lists',
-  'Strings',
-  'Dictionaries',
-  'Loops',
-  'Functions',
-  'Classes',
-  'Recursion',
-]
+const LessonStructure = ({ data, setData }) => {
+  // TODO: add everything to a form and then add a save button that sends data back to AddLessons
+  const [lessonTitle, setLessonTitle] = useState(data['lessonTitle'])
+  const [numQuestions, setNumQuestions] = useState(data['numQuestions'])
+  const [topics, setTopics] = useState(data['selectedTopics'])
 
-const LessonStructure = () => {
-  const [lessonTitle, setLessonTitle] = useState('New Lesson')
-  const [numQuestions, setNumQuestions] = useState(1)
-  const [topics, setTopics] = useState({
-    Lists: false,
-    Strings: false,
-    Dictionaries: false,
-    Loops: false,
-    Functions: false,
-    Classes: false,
-    Recursion: false,
-  })
-
-  const handleTopicChange = event => {
-    console.log(event.target.name, event.target.checked)
-    setTopics({ ...topics, [event.target.name]: event.target.checked })
+  // temporary solution. will fetch topics from the server later
+  const questionOptions = [...Array.from({ length: 10 }, (v, i) => i + 1)]
+  const mockTopics = [
+    'Lists',
+    'Strings',
+    'Dictionaries',
+    'Loops',
+    'Functions',
+    'Classes',
+    'Recursion',
+  ]
+  const mappings = () => {
+    return mockTopics.map(topic => {
+      if (topics.includes(topic)) {
+        return { [topic]: true }
+      }
+      return { [topic]: false }
+    })
   }
 
-  // const selectedTopics = Object.keys(topics).filter(topic => topics[topic])
-  const selectedTopics = topics => Object.keys(topics).filter(topic => topics[topic])
+  const [topicMappings, setTopicMappings] = useState(Object.assign({}, ...mappings()))
+
+  const submitForm = event => {
+    event.preventDefault()
+    // console.log(lessonTitle)
+    // console.log(data['selectedTopics'])
+
+    const selectedTopics = Object.keys(topicMappings).filter(topic => topicMappings[topic])
+    // console.log(selectedTopics)
+    // This is just a duct-tape solution to prevent the form from submitting if some fields are empty
+    // will try to use MUI form validation later or the required prop for text fields in future to prevent invalid form submissions
+    if ((data['lessonTitle'] === '' && lessonTitle === '') || selectedTopics.length === 0) {
+      alert('Please fill in all fields')
+      return
+    }
+    setData({ ...data, lessonTitle, numQuestions, selectedTopics })
+    // console.log(data)
+    console.log('submitted form')
+  }
+  const handleTopicChange = event => {
+    setTopicMappings({ ...topicMappings, [event.target.name]: event.target.checked })
+  }
+
   return (
     <Box
       sx={{
@@ -45,59 +63,53 @@ const LessonStructure = () => {
         },
       }}
     >
-      <h1>Lesson Structure</h1>
-      <div>Lesson Title</div>
-      <TextField
-        id="lesson-title-input"
-        label="Lesson Title"
-        variant="standard"
-        value={lessonTitle}
-        onChange={event => setLessonTitle(event.target.value)}
-        required
-      />
-      {/* <InputLabel id="num-questions-label">Number of Questions</InputLabel> */}
-      <div>Number of Questions</div>
-      <TextField
-        // labelId="num-questions-label"
-        select
-        maxRows={4}
-        id="num-questions-input"
-        label="Number of Questions"
-        value={numQuestions}
-        onChange={event => setNumQuestions(event.target.value)}
-        required
-      >
-        {questionOptions.map((number, index) => {
-          return (
-            <MenuItem key={index} value={number}>
-              {number}
-            </MenuItem>
-          )
-        })}
-      </TextField>
-      <div>checkbox goes here</div>
-      <TextField select label="relevant topics">
-        <FormGroup>
-          {mockTopics.map((topic, index) => (
-            <MenuItem key={index}>
-              <FormControlLabel
-                label={topic}
-                control={
-                  <Checkbox checked={topics[topic]} onChange={handleTopicChange} name={topic} />
-                }
-              />
-            </MenuItem>
-          ))}
-        </FormGroup>
-      </TextField>
-      <h2>DATA FROM INPUTS</h2>
-      <p>{lessonTitle}</p>
-      <p>{numQuestions}</p>
-      <p>
-        {selectedTopics(topics).map(topic => {
-          return `${topic}, `
-        })}
-      </p>
+      {/* <h1>Lesson Structure</h1> */}
+      <form onSubmit={submitForm}>
+        <TextField
+          id="lesson-title-input"
+          label="Lesson Title"
+          variant="standard"
+          value={lessonTitle}
+          onChange={event => setLessonTitle(event.target.value)}
+          required
+        />
+        <TextField
+          select
+          maxRows={4}
+          id="num-questions-input"
+          label="Number of Questions"
+          value={numQuestions}
+          onChange={event => setNumQuestions(event.target.value)}
+          required
+        >
+          {questionOptions.map((number, index) => {
+            return (
+              <MenuItem key={index} value={number}>
+                {number}
+              </MenuItem>
+            )
+          })}
+        </TextField>
+        <TextField select id="relevant-topics-select" label="relevant topics">
+          <FormGroup>
+            {mockTopics.map((topic, index) => (
+              <MenuItem key={index}>
+                <FormControlLabel
+                  label={topic}
+                  control={
+                    <Checkbox
+                      checked={topicMappings[topic]}
+                      onChange={handleTopicChange}
+                      name={topic}
+                    />
+                  }
+                />
+              </MenuItem>
+            ))}
+          </FormGroup>
+        </TextField>
+        <input type="submit" value="Save" />
+      </form>
     </Box>
   )
 }

@@ -33,24 +33,35 @@ const Step3Test = () => {
 
 // TODO: this is just a test component to show how to switch between steps
 // add the actual components for each step later
-const handlePageBasedOnStep = step => {
-  switch (step) {
-    case 1:
-      return <Step2Test />
-    case 2:
-      return <Step3Test />
-    default:
-      return <LessonStructure />
-  }
-}
 
 const AddLessons = () => {
   const [activeStep, setActiveStep] = useState(0)
+  const [dataFromStep1, setDataFromStep1] = useState({
+    lessonTitle: '',
+    numQuestions: 1,
+    selectedTopics: [],
+  })
+
+  const handlePageBasedOnStep = step => {
+    switch (step) {
+      case 1:
+        return <Step2Test />
+      case 2:
+        return <Step3Test />
+      default:
+        return <LessonStructure data={dataFromStep1} setData={setDataFromStep1} />
+    }
+  }
   return (
     <div className="addLessons">
-      <h1>Add Lessons Page</h1>
       {/* <Step1Test /> */}
       {handlePageBasedOnStep(activeStep)}
+      {/* <h2>DATA FROM STEP 1</h2>
+      <div>
+        {Object.keys(dataFromStep1).map(key => (
+          <p>{dataFromStep1[key]}</p>
+        ))}
+      </div> */}
       <LessonStepper activeStep={activeStep} setActiveStep={setActiveStep} />
     </div>
   )
