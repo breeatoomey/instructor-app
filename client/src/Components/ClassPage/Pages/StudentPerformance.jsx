@@ -4,7 +4,7 @@ import SideMenu from '../SideMenu/SideMenu'
 const StudentPerformance = () => {
   return (
     <div>
-      <SideMenu />
+      <SideMenu page="Student Performance" />
       <h1> Student Performance</h1>
     </div>
   )

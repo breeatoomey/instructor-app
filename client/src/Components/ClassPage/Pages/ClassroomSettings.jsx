@@ -4,7 +4,7 @@ import SideMenu from '../SideMenu/SideMenu'
 export default function ClassroomSettings() {
   return (
     <div className="classroomSettings">
-      <SideMenu />
+      <SideMenu page="Classroom Settings" />
       <h1> Classroom Settings </h1>
     </div>
   )

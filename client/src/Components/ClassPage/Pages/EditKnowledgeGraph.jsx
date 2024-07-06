@@ -158,7 +158,7 @@ const EditKnowledgeGraph = () => {
         height: '90vh',
       }}
     >
-      <SideMenu />
+      <SideMenu page="Knowledge Graph" />
       <Box
         id="user-input"
         sx={{

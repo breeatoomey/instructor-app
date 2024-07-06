@@ -65,20 +65,26 @@ const mockLessons = [
     description: 'This is the twelfth lesson',
     id: 12,
   },
+  {
+    title: 'Lesson 13',
+    description: 'This is the thirteenth lesson',
+    id: 13,
+  },
 ]
 
 const Lessons = () => {
   const navigate = useNavigate()
   return (
-    <div className="lessons">
-      <SideMenu isLessonPage={true} />
+    <>
+      <SideMenu page="Lessons" />
       <Box
+        id="lessons-container"
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'center',
           backgroundColor: '#EAECE9',
-          height: '100vh',
+          // height: '100vh',
           padding: 7,
         }}
       >
@@ -88,13 +94,18 @@ const Lessons = () => {
               key={index}
               elevation={4}
               sx={{
-                width: 250,
-                height: 100,
+                width: '25ch',
+                height: '20ch',
                 margin: 5,
                 padding: 1,
+
                 '&:hover': {
-                  backgroundColor: '#f5f5f5',
+                  backgroundColor: '#EAECE9',
                   cursor: 'pointer',
+                  outline: '1px solid black',
+                  transform: 'scale(1.05)',
+                  transition: 'all',
+                  transitionDuration: '0.3s',
                 },
               }}
               onClick={() => navigate('/lesson')}
@@ -104,7 +115,7 @@ const Lessons = () => {
           )
         })}
       </Box>
-    </div>
+    </>
   )
 }
 

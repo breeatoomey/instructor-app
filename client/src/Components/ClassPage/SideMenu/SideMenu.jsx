@@ -1,5 +1,6 @@
 // import { Drawer } from '@mui/material'
 import { Menu, ChevronLeft } from '@mui/icons-material'
+import HomeIcon from '@mui/icons-material/Home'
 import LessonsIcon from '@mui/icons-material/MenuBook'
 import KnowledgeGraphIcon from '@mui/icons-material/Workspaces'
 import RosterIcon from '@mui/icons-material/Groups'
@@ -15,7 +16,7 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import { IconButton, Stack, Fab, Tooltip } from '@mui/material'
+import { IconButton, Box, Fab, Tooltip } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -88,7 +89,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })
   })
 )
 
-const SideMenu = ({ isLessonPage }) => {
+const SideMenu = ({ page }) => {
   const theme = useTheme()
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
 
@@ -96,6 +97,7 @@ const SideMenu = ({ isLessonPage }) => {
   const handleMenuClose = () => setIsSideMenuOpen(false)
 
   const sideMenuItems = [
+    { text: 'Home', icon: <HomeIcon />, slug: '/home' },
     { text: 'Lessons', icon: <LessonsIcon />, slug: '/lessons' },
     { text: 'Knowledge Graph', icon: <KnowledgeGraphIcon />, slug: '/knowledge-graph' },
     { text: 'Roster', icon: <RosterIcon />, slug: '/roster' },
@@ -107,25 +109,25 @@ const SideMenu = ({ isLessonPage }) => {
   return (
     <div className="side-menu">
       <AppBar position="fixed" open={isSideMenuOpen}>
-        <Toolbar>
-          <Stack direction="row" spacing={10} justifyContent="center" alignItems="center">
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
             <IconButton onClick={handleMenuOpen} sx={{ color: 'white' }}>
               <Menu />
             </IconButton>
-            <h2 onClick={() => navigate('/home')}>Class Name</h2>
-            <h2>MENU ITEM NAME GOES HERE</h2>
-            {isLessonPage ? (
-              <>
-                <Tooltip title="Add Lesson">
-                  <Fab variant="extended" color="white" onClick={() => navigate('/add-lessons')}>
-                    <AddIcon />
-                  </Fab>
-                </Tooltip>
-              </>
-            ) : (
-              ''
-            )}
-          </Stack>
+          </Box>
+          <h2>{page}</h2>
+
+          {page === 'Lessons' ? (
+            <>
+              <Tooltip title="Add Lesson">
+                <Fab variant="extended" color="white" onClick={() => navigate('/add-lessons')}>
+                  <AddIcon />
+                </Fab>
+              </Tooltip>
+            </>
+          ) : (
+            <div></div> // empty div to maintain the same number of children in the toolbar ( sorry for the hacky solution :/ )
+          )}
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={isSideMenuOpen}>
