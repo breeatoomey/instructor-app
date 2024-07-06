@@ -1,4 +1,4 @@
-import { TextField, Stack, IconButton } from '@mui/material'
+import { TextField, Stack, IconButton, Box } from '@mui/material'
 import { Card, CardContent, Tooltip } from '@mui/material'
 import HelpIcon from '@mui/icons-material/Help'
 import { useState, useEffect } from 'react'
@@ -109,9 +109,24 @@ const EditKnowledgeGraph = () => {
   }, [nodesFromInput, edgesFromInput])
 
   const helperCard = (
-    <>
+    <Box
+      id="help-container"
+      sx={{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        '& > :not(style)': {
+          m: 0,
+          // padding: 1,
+          width: '40ch',
+        },
+      }}
+    >
       <CardContent>
-        <h2>How to Input Your Knowledge Graph</h2>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <IconButton onClick={() => setIsHelpOpen(!isHelpOpen)}>X</IconButton>
+          <h2>How to Input Your Knowledge Graph</h2>
+        </Box>
+
         <h3>Input Format:</h3>
         <ol>
           <li>Levels: Indicate each level using '== Level X ==', where X is the level number.</li>
@@ -130,15 +145,40 @@ const EditKnowledgeGraph = () => {
           <li>Ensure there are no cycles within your knowledge graph</li>
         </ol>
       </CardContent>
-    </>
+    </Box>
   )
 
   return (
-    <div className="editKnowledgeGraph">
+    <Box
+      id="edit-knowledge-graph-container"
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '90vh',
+      }}
+    >
       <SideMenu />
-      <h1> Edit Knowledge Graph </h1>
-      <Stack direction="row" justifyContent="space-evenly" alignItems="flex-start" spacing={10}>
-        {/* add Info icon for user input */}
+      <Box
+        id="user-input"
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+          padding: 2,
+        }}
+      >
+        {isHelpOpen ? (
+          <Card variant="outlined" sx={{ backgroundColor: '#EAECE9' }}>
+            {helperCard}
+          </Card>
+        ) : (
+          <Tooltip title="Help" arrow>
+            <IconButton onClick={() => setIsHelpOpen(!isHelpOpen)}>
+              <HelpIcon id="help-button" color="info" />
+            </IconButton>
+          </Tooltip>
+        )}
         <form id="graph-input" onSubmit={submitForm}>
           <TextField
             label="Knowledge Graph"
@@ -147,27 +187,20 @@ const EditKnowledgeGraph = () => {
             multiline
             rows={8}
           />
-          <Stack direction="row" spacing={8} justifyContent="space-evenly" alignItems="center">
-            <div id="help-container">
-              <Tooltip title="Help" arrow>
-                <IconButton onClick={() => setIsHelpOpen(!isHelpOpen)}>
-                  <HelpIcon id="help-button" color="info" />
-                </IconButton>
-              </Tooltip>
-              {isHelpOpen ? (
-                <Card variant="outlined" sx={{ backgroundColor: '#EAECE9' }}>
-                  {helperCard}
-                </Card>
-              ) : (
-                ''
-              )}
-            </div>
-            <input type="submit" value="Update" />
-          </Stack>
+          <input type="submit" value="Update" />
         </form>
+      </Box>
+      <Box
+        id="knowledge-graph"
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          padding: 2,
+        }}
+      >
         <KnowledgeGraph nodesInLevels={parsedNodes ? parsedNodes : ''} />
-      </Stack>
-    </div>
+      </Box>
+    </Box>
   )
 }
 

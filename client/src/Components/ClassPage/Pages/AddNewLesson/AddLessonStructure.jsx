@@ -1,7 +1,15 @@
 import { useState } from 'react'
-import { Box, TextField, MenuItem, Checkbox, FormControlLabel, FormGroup } from '@mui/material'
+import {
+  Box,
+  TextField,
+  MenuItem,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Button,
+} from '@mui/material'
 
-const LessonStructure = ({ data, setData }) => {
+const AddLessonStructure = ({ data, setData }) => {
   // TODO: add everything to a form and then add a save button that sends data back to AddLessons
   const [lessonTitle, setLessonTitle] = useState(data['lessonTitle'])
   const [numQuestions, setNumQuestions] = useState(data['numQuestions'])
@@ -44,7 +52,8 @@ const LessonStructure = ({ data, setData }) => {
     }
     setData({ ...data, lessonTitle, numQuestions, selectedTopics })
     // console.log(data)
-    console.log('submitted form')
+    alert('Lesson structure saved. You can proceed to the next step safely.')
+    // console.log('submitted form')
   }
   const handleTopicChange = event => {
     setTopicMappings({ ...topicMappings, [event.target.name]: event.target.checked })
@@ -52,18 +61,22 @@ const LessonStructure = ({ data, setData }) => {
 
   return (
     <Box
+      id="lesson-structure-form-container"
       sx={{
+        // position: 'static',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        // backgroundColor: '#EAECE9',
+        height: '80vh',
         '& > :not(style)': {
           m: 1,
           width: '25ch',
         },
       }}
     >
-      {/* <h1>Lesson Structure</h1> */}
+      <h1>Lesson Structure</h1>
       <form onSubmit={submitForm}>
         <TextField
           id="lesson-title-input"
@@ -75,7 +88,6 @@ const LessonStructure = ({ data, setData }) => {
         />
         <TextField
           select
-          maxRows={4}
           id="num-questions-input"
           label="Number of Questions"
           value={numQuestions}
@@ -108,10 +120,12 @@ const LessonStructure = ({ data, setData }) => {
             ))}
           </FormGroup>
         </TextField>
-        <input type="submit" value="Save" />
+        <Button type="submit" variant="contained">
+          Save
+        </Button>
       </form>
     </Box>
   )
 }
 
-export default LessonStructure
+export default AddLessonStructure

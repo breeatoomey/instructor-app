@@ -1,6 +1,6 @@
 import { Stepper, Step, StepLabel, Button, Box } from '@mui/material'
 // import React from 'react'
-import { useState } from 'react'
+// import { useState } from 'react'
 
 const steps = ['Lesson Structure', 'Lesson Questions', 'Review Lesson']
 
@@ -29,7 +29,9 @@ const LessonStepper = ({ activeStep, setActiveStep }) => {
           <>
             <Button
               variant="contained"
-              onClick={() => alert('stepper finished. redirect to lesson page later.')}
+              onClick={() =>
+                alert('lesson should be added to database now. redirect to lesson page later.')
+              }
             >
               Finish
             </Button>

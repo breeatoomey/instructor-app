@@ -1,33 +1,15 @@
-// import {
-//   Box,
-//   TextField,
-//   Select,
-//   MenuItem,
-//   InputLabel,
-//   FormControl,
-//   Checkbox,
-//   FormControlLabel,
-//   FormGroup,
-// } from '@mui/material'
+import { Box } from '@mui/material'
 import { useState } from 'react'
 import LessonStepper from './LessonStepper'
-import LessonStructure from './LessonStructure'
-
-const Step2Test = () => {
-  return (
-    <div>
-      <h1>Step 2</h1>
-      <p>Step 2 content goes here</p>
-    </div>
-  )
-}
+import AddLessonStructure from './AddLessonStructure'
+import AddLessonQuestions from './AddLessonQuestions'
 
 const Step3Test = () => {
   return (
-    <div>
+    <>
       <h1>Step 3</h1>
-      <p>Step 3 content goes here</p>
-    </div>
+      <p>Review and confirm lesson page goes here</p>
+    </>
   )
 }
 
@@ -36,34 +18,44 @@ const Step3Test = () => {
 
 const AddLessons = () => {
   const [activeStep, setActiveStep] = useState(0)
-  const [dataFromStep1, setDataFromStep1] = useState({
+  const [dataFromStepOne, setdataFromStepOne] = useState({
     lessonTitle: '',
     numQuestions: 1,
     selectedTopics: [],
   })
+  // const [isStepOneComplete, setIsStepOneComplete] = useState(false)
 
   const handlePageBasedOnStep = step => {
     switch (step) {
       case 1:
-        return <Step2Test />
+        return (
+          <AddLessonQuestions
+            title={dataFromStepOne['lessonTitle']}
+            questionLimit={dataFromStepOne['numQuestions']}
+            topics={dataFromStepOne['selectedTopics']}
+          />
+        )
       case 2:
         return <Step3Test />
       default:
-        return <LessonStructure data={dataFromStep1} setData={setDataFromStep1} />
+        return <AddLessonStructure data={dataFromStepOne} setData={setdataFromStepOne} />
     }
   }
   return (
-    <div className="addLessons">
+    <Box
+      className="addLessons"
+      // sx={{ backgroundColor: '#EAECE9', height: '100vh' }}
+    >
       {/* <Step1Test /> */}
       {handlePageBasedOnStep(activeStep)}
       {/* <h2>DATA FROM STEP 1</h2>
       <div>
-        {Object.keys(dataFromStep1).map(key => (
-          <p>{dataFromStep1[key]}</p>
+        {Object.keys(dataFromStepOne).map(key => (
+          <p>{dataFromStepOne[key]}</p>
         ))}
       </div> */}
       <LessonStepper activeStep={activeStep} setActiveStep={setActiveStep} />
-    </div>
+    </Box>
   )
 }
 
