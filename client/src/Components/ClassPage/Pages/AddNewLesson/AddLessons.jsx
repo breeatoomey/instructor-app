@@ -23,6 +23,7 @@ const AddLessons = () => {
     numQuestions: 1,
     selectedTopics: [],
   })
+  const [dataFromStepTwo, setdataFromStepTwo] = useState({})
   // const [isStepOneComplete, setIsStepOneComplete] = useState(false)
 
   const handlePageBasedOnStep = step => {
@@ -33,6 +34,7 @@ const AddLessons = () => {
             title={dataFromStepOne['lessonTitle']}
             questionLimit={dataFromStepOne['numQuestions']}
             topics={dataFromStepOne['selectedTopics']}
+            setQuestionData={setdataFromStepTwo}
           />
         )
       case 2:
