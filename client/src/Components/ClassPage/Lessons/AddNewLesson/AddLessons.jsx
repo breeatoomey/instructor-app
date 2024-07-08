@@ -1,8 +1,8 @@
 import { Box } from '@mui/material'
 import { useState } from 'react'
 import LessonStepper from './LessonStepper'
-import AddLessonStructure from './AddLessonStructure'
-import AddLessonQuestions from './AddLessonQuestions'
+import AddLessonStructure from './ChildComponents/AddLessonStructure'
+import AddLessonQuestions from './ChildComponents/AddLessonQuestions'
 
 const Step3Test = () => {
   return (
@@ -25,26 +25,30 @@ const AddLessons = () => {
   })
   const [dataFromStepTwo, setdataFromStepTwo] = useState([
     {
-      questionNumber: '',
-      questionType: '',
-      prompt: '',
-      codeSnippet: '',
-      topicsCovered: [],
-      answers: [],
-      correctAnswer: '',
+      // questionNumber: '',
+      // questionType: '',
+      // prompt: '',
+      // codeSnippet: '',
+      // topicsCovered: [],
+      // answers: [],
+      // correctAnswer: '',
       // incorrrectAnswers: [],
     },
   ])
+  const [enteredQuestions, setEnteredQuestions] = useState(0)
   // const [isStepOneComplete, setIsStepOneComplete] = useState(false)
 
   const handlePageBasedOnStep = step => {
     switch (step) {
       case 2:
-        return (
+        return enteredQuestions === dataFromStepOne.numQuestions ? (
+          <h2>All questions entered</h2>
+        ) : (
           <AddLessonQuestions
             title={dataFromStepOne['lessonTitle']}
             questionLimit={dataFromStepOne['numQuestions']}
             topics={dataFromStepOne['selectedTopics']}
+            setEnteredQuestions={setEnteredQuestions}
             prevQuestionData={dataFromStepTwo}
             setQuestionData={setdataFromStepTwo}
           />
@@ -62,6 +66,9 @@ const AddLessons = () => {
     >
       {handlePageBasedOnStep(activeStep)}
       <LessonStepper activeStep={activeStep} setActiveStep={setActiveStep} />
+      {console.log('dataFromStepTwo')}
+      {console.log(dataFromStepTwo)}
+      {console.log('entered questions')}
     </Box>
   )
 }
