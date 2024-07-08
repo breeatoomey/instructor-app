@@ -25,7 +25,7 @@ const LessonStepper = ({ activeStep, setActiveStep }) => {
           Back
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
-        {activeStep === steps.length - 1 ? (
+        {activeStep === steps.length ? (
           <>
             <Button
               variant="contained"

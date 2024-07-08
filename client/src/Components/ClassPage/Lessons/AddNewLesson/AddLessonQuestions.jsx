@@ -1,16 +1,6 @@
-import {
-  Box,
-  TextField,
-  MenuItem,
-  IconButton,
-  Tooltip,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  Switch,
-} from '@mui/material'
+import { Box, TextField, MenuItem } from '@mui/material'
 import { useState } from 'react'
-import CheckIcon from '@mui/icons-material/Check'
+import MultipleChoice from './MultipleChoice'
 
 const questionFormats = [
   'Multiple Choice',
@@ -19,106 +9,6 @@ const questionFormats = [
   'Fill in the Blank',
   'Rearrange the Code',
 ]
-
-const MultipleChoice = ({
-  enteredQuestions,
-  setEnteredQuestions,
-  limit,
-  topics,
-  prevData,
-  setQuestionData,
-}) => {
-  const [prompt, setPrompt] = useState('')
-  const [codeSnippet, setCodeSnippet] = useState('')
-  const [answer, setAnswer] = useState({})
-  const [relevantTopics, setRelevantTopics] = useState([])
-  // const [relevantDisplayTopics, setDisplayRelevantTopics] = useState('')
-  // const [isCorrectAnswer, setIsCorrectAnswer] = useState(false)
-
-  const numberOfChoices = 4
-
-  const saveQuestion = () => {
-    setEnteredQuestions(prev => prev + 1)
-    // here is where we would update data state
-  }
-  return (
-    <>
-      <Box>
-        <h2>{`Progress: ${enteredQuestions}/${limit}`}</h2>
-
-        <TextField
-          id="question-prompt-input"
-          label="Question Prompt"
-          value={prompt}
-          onChange={event => setPrompt(event.target.value)}
-          multiline
-          rows={4}
-          fullWidth
-        />
-        <TextField
-          id="code-snippet-input"
-          label="Code Snippet"
-          value={codeSnippet}
-          onChange={event => setCodeSnippet(event.target.value)}
-          multiline
-          rows={4}
-          fullWidth
-        />
-
-        {/* make this a component since we're reusing pretty much the same code from LessonStructure for selecting topics */}
-        <TextField select id="relevant-topics-for-question-select" label="Topics Covered" fullWidth>
-          <FormGroup>
-            {topics.map((topic, index) => (
-              <MenuItem key={index}>
-                <FormControlLabel
-                  label={topic}
-                  control={
-                    <Checkbox
-                      checked={true}
-                      // checked={topicMappings[topic]}
-                      // onChange={handleTopicChange}
-                      name={topic}
-                    />
-                  }
-                />
-              </MenuItem>
-            ))}
-          </FormGroup>
-        </TextField>
-
-        {[...Array(numberOfChoices)].map((_, index) => {
-          return (
-            <>
-              <TextField key={index} id={`choice-${index}`} label={`Answer ${index + 1}`} />
-              {/* <Switch label="Correct" /> */}
-            </>
-          )
-        })}
-        {prompt}
-        {codeSnippet}
-        <Tooltip title="Save Question" arrow>
-          <IconButton
-            onClick={() => setEnteredQuestions(prev => prev + 1)}
-            disabled={enteredQuestions >= limit}
-            sx={{
-              color: 'green',
-              outline: ' 1px solid green',
-              '&:hover': {
-                backgroundColor: 'green',
-                color: 'white',
-                transform: 'scale(1.1)',
-                transition: 'all 0.3s',
-                outline: 'none',
-              },
-            }}
-          >
-            <CheckIcon />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    </>
-  )
-}
 
 const AddLessonQuestions = ({
   title,
@@ -141,6 +31,7 @@ const AddLessonQuestions = ({
             topics={topics}
             prevData={prevQuestionData}
             setQuestionData={setQuestionData}
+            resetQuestionFormat={setQuestionFormat}
           />
         )
       case 'True/False':

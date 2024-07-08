@@ -17,26 +17,29 @@ const Step3Test = () => {
 // add the actual components for each step later
 
 const AddLessons = () => {
-  const [activeStep, setActiveStep] = useState(0)
+  const [activeStep, setActiveStep] = useState(1)
   const [dataFromStepOne, setdataFromStepOne] = useState({
     lessonTitle: '',
     numQuestions: 1,
     selectedTopics: [],
   })
-  const [dataFromStepTwo, setdataFromStepTwo] = useState({
-    questionNumber: '',
-    questionType: '',
-    prompt: '',
-    codeSnippet: '',
-    topicsCovered: [],
-    correctAnswer: '',
-    incorrrectAnswers: [],
-  })
+  const [dataFromStepTwo, setdataFromStepTwo] = useState([
+    {
+      questionNumber: '',
+      questionType: '',
+      prompt: '',
+      codeSnippet: '',
+      topicsCovered: [],
+      answers: [],
+      correctAnswer: '',
+      // incorrrectAnswers: [],
+    },
+  ])
   // const [isStepOneComplete, setIsStepOneComplete] = useState(false)
 
   const handlePageBasedOnStep = step => {
     switch (step) {
-      case 1:
+      case 2:
         return (
           <AddLessonQuestions
             title={dataFromStepOne['lessonTitle']}
@@ -46,7 +49,7 @@ const AddLessons = () => {
             setQuestionData={setdataFromStepTwo}
           />
         )
-      case 2:
+      case 3:
         return <Step3Test />
       default:
         return <AddLessonStructure data={dataFromStepOne} setData={setdataFromStepOne} />

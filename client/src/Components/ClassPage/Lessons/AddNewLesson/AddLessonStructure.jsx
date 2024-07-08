@@ -37,6 +37,10 @@ const AddLessonStructure = ({ data, setData }) => {
 
   const [topicMappings, setTopicMappings] = useState(Object.assign({}, ...mappings()))
 
+  const handleTopicChange = event => {
+    setTopicMappings({ ...topicMappings, [event.target.name]: event.target.checked })
+  }
+
   const submitForm = event => {
     event.preventDefault()
     // console.log(lessonTitle)
@@ -54,9 +58,6 @@ const AddLessonStructure = ({ data, setData }) => {
     // console.log(data)
     alert('Lesson structure saved. You can proceed to the next step safely.')
     // console.log('submitted form')
-  }
-  const handleTopicChange = event => {
-    setTopicMappings({ ...topicMappings, [event.target.name]: event.target.checked })
   }
 
   return (
