@@ -23,7 +23,15 @@ const AddLessons = () => {
     numQuestions: 1,
     selectedTopics: [],
   })
-  const [dataFromStepTwo, setdataFromStepTwo] = useState({})
+  const [dataFromStepTwo, setdataFromStepTwo] = useState({
+    questionNumber: '',
+    questionType: '',
+    prompt: '',
+    codeSnippet: '',
+    topicsCovered: [],
+    correctAnswer: '',
+    incorrrectAnswers: [],
+  })
   // const [isStepOneComplete, setIsStepOneComplete] = useState(false)
 
   const handlePageBasedOnStep = step => {
@@ -34,6 +42,7 @@ const AddLessons = () => {
             title={dataFromStepOne['lessonTitle']}
             questionLimit={dataFromStepOne['numQuestions']}
             topics={dataFromStepOne['selectedTopics']}
+            prevQuestionData={dataFromStepTwo}
             setQuestionData={setdataFromStepTwo}
           />
         )
@@ -48,14 +57,7 @@ const AddLessons = () => {
       className="addLessons"
       // sx={{ backgroundColor: '#EAECE9', height: '100vh' }}
     >
-      {/* <Step1Test /> */}
       {handlePageBasedOnStep(activeStep)}
-      {/* <h2>DATA FROM STEP 1</h2>
-      <div>
-        {Object.keys(dataFromStepOne).map(key => (
-          <p>{dataFromStepOne[key]}</p>
-        ))}
-      </div> */}
       <LessonStepper activeStep={activeStep} setActiveStep={setActiveStep} />
     </Box>
   )

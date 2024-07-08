@@ -25,13 +25,14 @@ const MultipleChoice = ({
   setEnteredQuestions,
   limit,
   topics,
+  prevData,
   setQuestionData,
 }) => {
   const [prompt, setPrompt] = useState('')
   const [codeSnippet, setCodeSnippet] = useState('')
-  const [correctAnswer, setCorrectAnswer] = useState({})
+  const [answer, setAnswer] = useState({})
   const [relevantTopics, setRelevantTopics] = useState([])
-  // const [relevantTopics, setRelevantTopics] = useState('')
+  // const [relevantDisplayTopics, setDisplayRelevantTopics] = useState('')
   // const [isCorrectAnswer, setIsCorrectAnswer] = useState(false)
 
   const numberOfChoices = 4
@@ -44,24 +45,6 @@ const MultipleChoice = ({
     <>
       <Box>
         <h2>{`Progress: ${enteredQuestions}/${limit}`}</h2>
-        <Tooltip title="Save Question" arrow>
-          <IconButton
-            onClick={() => setEnteredQuestions(prev => prev + 1)}
-            sx={{
-              color: 'green',
-              outline: ' 1px solid green',
-              '&:hover': {
-                backgroundColor: 'green',
-                color: 'white',
-                transform: 'scale(1.1)',
-                transition: 'all 0.3s',
-                outline: 'none',
-              },
-            }}
-          >
-            <CheckIcon />
-          </IconButton>
-        </Tooltip>
 
         <TextField
           id="question-prompt-input"
@@ -107,30 +90,56 @@ const MultipleChoice = ({
           return (
             <>
               <TextField key={index} id={`choice-${index}`} label={`Answer ${index + 1}`} />
-              <Switch defaultChecked />
+              {/* <Switch label="Correct" /> */}
             </>
           )
         })}
-        {/* {prompt}
-        {codeSnippet} */}
+        {prompt}
+        {codeSnippet}
+        <Tooltip title="Save Question" arrow>
+          <IconButton
+            onClick={() => setEnteredQuestions(prev => prev + 1)}
+            disabled={enteredQuestions >= limit}
+            sx={{
+              color: 'green',
+              outline: ' 1px solid green',
+              '&:hover': {
+                backgroundColor: 'green',
+                color: 'white',
+                transform: 'scale(1.1)',
+                transition: 'all 0.3s',
+                outline: 'none',
+              },
+            }}
+          >
+            <CheckIcon />
+          </IconButton>
+        </Tooltip>
       </Box>
     </>
   )
 }
 
-const AddLessonQuestions = ({ title, questionLimit, topics, setQuestionData }) => {
+const AddLessonQuestions = ({
+  title,
+  questionLimit,
+  topics,
+  prevQuestionData,
+  setQuestionData,
+}) => {
   const [questionFormat, setQuestionFormat] = useState('')
   const [enteredQuestions, setEnteredQuestions] = useState(0)
-  const [localData, setLocalData] = useState({}) // have this so when user comes back to this page, they can see their previous work? or can just pass it from the parent component?
+  // const [localData, setLocalData] = useState({}) // have this so when user comes back to this page, they can see their previous work? or can just pass it from the parent component?
   const handlePageBasedOnQuestionFormat = format => {
     switch (format) {
       case 'Multiple Choice':
         return (
           <MultipleChoice
             enteredQuestions={enteredQuestions}
-            addQuestion={setEnteredQuestions}
+            setEnteredQuestions={setEnteredQuestions}
             limit={questionLimit}
             topics={topics}
+            prevData={prevQuestionData}
             setQuestionData={setQuestionData}
           />
         )
@@ -180,9 +189,7 @@ const AddLessonQuestions = ({ title, questionLimit, topics, setQuestionData }) =
       }}
     >
       <h1>{title}</h1>
-      <div></div> {/* TODO: uhhh definitely fix this with some css later plz*/}
-      {/* <h2>Question Limit: {questionLimit}</h2>
-      <h2>Topics: {topics.join(', ')}</h2> */}
+      <div></div> {/* TODO: uhhh definitely fix this with some css later */}
       <TextField
         select
         label="Question Format"

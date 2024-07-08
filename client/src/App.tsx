@@ -8,15 +8,15 @@ import Setting from './Components/DashBoard/DashboardComponents/Setting.js'
 // import Navbar from './Components/DashBoard/Navbar.jsx'
 import React from 'react'
 // import Sidebar from './Components/ClassPage/Sidebar.jsx'
-import Lessons from './Components/ClassPage/Pages/Lessons.jsx'
-import AddLessons from './Components/ClassPage/Pages/AddNewLesson/AddLessons.jsx'
-import EditKnowledgeGraph from './Components/ClassPage/Pages/EditKnowledgeGraph.jsx'
+import Lessons from './Components/ClassPage/Lessons/Lessons.jsx'
+import AddLessons from './Components/ClassPage/Lessons/AddNewLesson/AddLessons.jsx'
+import EditKnowledgeGraph from './Components/ClassPage/KnowledgeGraph/EditKnowledgeGraph.jsx'
 import Roster from './Components/ClassPage/Pages/Roster.jsx'
 import ClassroomSettings from './Components/ClassPage/Pages/ClassroomSettings.jsx'
 
 // stuff using MUI
 import Navbar from './Components/NewNavbar.jsx'
-import Lesson from './Components/ClassPage/Pages/Lesson.jsx'
+import Lesson from './Components/ClassPage/Lessons/Lesson.jsx'
 
 const items = [
   {
