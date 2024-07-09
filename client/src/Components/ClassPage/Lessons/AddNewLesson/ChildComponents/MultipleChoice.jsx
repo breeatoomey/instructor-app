@@ -142,54 +142,52 @@ const MultipleChoice = ({ setEnteredQuestions, topics, setQuestionData, resetQue
   return (
     <>
       <form onSubmit={saveQuestion}>
-        <Box id="inputs-container">
-          <TextField
-            id="question-prompt-input"
-            label="Question Prompt"
-            value={prompt}
-            onChange={event => setPrompt(event.target.value)}
-            multiline
-            rows={3}
-            required
-            fullWidth
-          />
-          <TextField
-            id="code-snippet-input"
-            label="Code Snippet"
-            value={codeSnippet}
-            onChange={event => setCodeSnippet(event.target.value)}
-            multiline
-            rows={3}
-            required
-            fullWidth
-          />
+        <TextField
+          id="question-prompt-input"
+          label="Question Prompt"
+          value={prompt}
+          onChange={event => setPrompt(event.target.value)}
+          multiline
+          rows={3}
+          required
+          fullWidth
+        />
+        <TextField
+          id="code-snippet-input"
+          label="Code Snippet"
+          value={codeSnippet}
+          onChange={event => setCodeSnippet(event.target.value)}
+          multiline
+          rows={3}
+          required
+          fullWidth
+        />
 
-          {/* make this a component since we're reusing pretty much the same code from LessonStructure for selecting topics */}
-          <TextField
-            select
-            id="relevant-topics-for-question-select"
-            label="Topics Covered"
-            helperText="Please select at least one topic"
-            fullWidth
-          >
-            <FormGroup>
-              {topics.map((topic, index) => (
-                <MenuItem key={index}>
-                  <FormControlLabel
-                    label={topic}
-                    control={
-                      <Checkbox
-                        checked={topicMappings[topic]}
-                        onChange={handleTopicChange}
-                        name={topic}
-                      />
-                    }
-                  />
-                </MenuItem>
-              ))}
-            </FormGroup>
-          </TextField>
-        </Box>
+        {/* make this a component since we're reusing pretty much the same code from LessonStructure for selecting topics */}
+        <TextField
+          select
+          id="relevant-topics-for-question-select"
+          label="Topics Covered"
+          helperText="Please select at least one topic"
+          fullWidth
+        >
+          <FormGroup>
+            {topics.map((topic, index) => (
+              <MenuItem key={index}>
+                <FormControlLabel
+                  label={topic}
+                  control={
+                    <Checkbox
+                      checked={topicMappings[topic]}
+                      onChange={handleTopicChange}
+                      name={topic}
+                    />
+                  }
+                />
+              </MenuItem>
+            ))}
+          </FormGroup>
+        </TextField>
         <AnswerChoices answers={answers} setAnswers={setAnswers} />
         <Box>
           <Tooltip title="Save Question" arrow>
@@ -203,4 +201,5 @@ const MultipleChoice = ({ setEnteredQuestions, topics, setQuestionData, resetQue
   )
 }
 
+export { AnswerChoices }
 export default MultipleChoice
