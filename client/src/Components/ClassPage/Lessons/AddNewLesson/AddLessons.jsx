@@ -23,18 +23,7 @@ const AddLessons = () => {
     numQuestions: 1,
     selectedTopics: [],
   })
-  const [dataFromStepTwo, setdataFromStepTwo] = useState([
-    {
-      // questionNumber: '',
-      // questionType: '',
-      // prompt: '',
-      // codeSnippet: '',
-      // topicsCovered: [],
-      // answers: [],
-      // correctAnswer: '',
-      // incorrrectAnswers: [],
-    },
-  ])
+  const [dataFromStepTwo, setdataFromStepTwo] = useState([{}])
   const [enteredQuestions, setEnteredQuestions] = useState(0)
   // const [isStepOneComplete, setIsStepOneComplete] = useState(false)
 
@@ -44,14 +33,16 @@ const AddLessons = () => {
         return enteredQuestions === dataFromStepOne.numQuestions ? (
           <h2>All questions entered</h2>
         ) : (
-          <AddLessonQuestions
-            title={dataFromStepOne['lessonTitle']}
-            questionLimit={dataFromStepOne['numQuestions']}
-            topics={dataFromStepOne['selectedTopics']}
-            setEnteredQuestions={setEnteredQuestions}
-            prevQuestionData={dataFromStepTwo}
-            setQuestionData={setdataFromStepTwo}
-          />
+          <>
+            <div>{`Questions entered: ${enteredQuestions}/${dataFromStepOne.numQuestions}`}</div>
+            <AddLessonQuestions
+              title={dataFromStepOne['lessonTitle']}
+              topics={dataFromStepOne['selectedTopics']}
+              setEnteredQuestions={setEnteredQuestions}
+              prevQuestionData={dataFromStepTwo}
+              setQuestionData={setdataFromStepTwo}
+            />
+          </>
         )
       case 3:
         return <Step3Test />
@@ -60,16 +51,12 @@ const AddLessons = () => {
     }
   }
   return (
-    <Box
-      className="addLessons"
-      // sx={{ backgroundColor: '#EAECE9', height: '100vh' }}
-    >
+    <>
       {handlePageBasedOnStep(activeStep)}
       <LessonStepper activeStep={activeStep} setActiveStep={setActiveStep} />
       {console.log('dataFromStepTwo')}
       {console.log(dataFromStepTwo)}
-      {console.log('entered questions')}
-    </Box>
+    </>
   )
 }
 

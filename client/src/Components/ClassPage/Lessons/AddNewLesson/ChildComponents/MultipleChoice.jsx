@@ -29,7 +29,11 @@ const AnswerChoices = ({ answers, setAnswers }) => {
   return (
     <FormControl>
       <FormLabel>Answer Choices</FormLabel>
-      <RadioGroup value={correctAnswer} onChange={event => setCorrectAnswer(event.target.value)}>
+      <RadioGroup
+        id="answer-choices-radio-group"
+        value={correctAnswer}
+        onChange={event => setCorrectAnswer(event.target.value)}
+      >
         <Box>
           <Radio value={answerOne} />
           <TextField
@@ -40,7 +44,6 @@ const AnswerChoices = ({ answers, setAnswers }) => {
             onChange={event => setAnswerOne(event.target.value)}
           />
         </Box>
-
         <Box>
           <Radio value={answerTwo} />
           <TextField
@@ -51,7 +54,6 @@ const AnswerChoices = ({ answers, setAnswers }) => {
             onChange={event => setAnswerTwo(event.target.value)}
           />
         </Box>
-
         <Box>
           <Radio value={answerThree} />
           <TextField
@@ -62,7 +64,6 @@ const AnswerChoices = ({ answers, setAnswers }) => {
             onChange={event => setAnswerThree(event.target.value)}
           />
         </Box>
-
         <Box>
           <Radio value={answerFour} />
           <TextField
@@ -78,15 +79,7 @@ const AnswerChoices = ({ answers, setAnswers }) => {
   )
 }
 
-const MultipleChoice = ({
-  // enteredQuestions,
-  setEnteredQuestions,
-  // limit,
-  topics,
-  // prevData,
-  setQuestionData,
-  resetQuestionFormat,
-}) => {
+const MultipleChoice = ({ setEnteredQuestions, topics, setQuestionData, resetQuestionFormat }) => {
   const [prompt, setPrompt] = useState('')
   const [codeSnippet, setCodeSnippet] = useState('')
   const [answers, setAnswers] = useState({
@@ -96,11 +89,13 @@ const MultipleChoice = ({
     answerFour: '',
     correctAnswer: '',
   })
+
   const mappings = () => {
     return topics.map(topic => {
       return { [topic]: false }
     })
   }
+
   const [topicMappings, setTopicMappings] = useState(Object.assign({}, ...mappings()))
 
   const handleTopicChange = event => {
@@ -147,16 +142,14 @@ const MultipleChoice = ({
   return (
     <>
       <form onSubmit={saveQuestion}>
-        <Box>
-          {/* <h2>{`Progress: ${enteredQuestions}/${limit}`}</h2> */}
-
+        <Box id="inputs-container">
           <TextField
             id="question-prompt-input"
             label="Question Prompt"
             value={prompt}
             onChange={event => setPrompt(event.target.value)}
             multiline
-            rows={4}
+            rows={3}
             required
             fullWidth
           />
@@ -166,7 +159,7 @@ const MultipleChoice = ({
             value={codeSnippet}
             onChange={event => setCodeSnippet(event.target.value)}
             multiline
-            rows={4}
+            rows={3}
             required
             fullWidth
           />
@@ -196,9 +189,9 @@ const MultipleChoice = ({
               ))}
             </FormGroup>
           </TextField>
-
-          <AnswerChoices answers={answers} setAnswers={setAnswers} />
-
+        </Box>
+        <AnswerChoices answers={answers} setAnswers={setAnswers} />
+        <Box>
           <Tooltip title="Save Question" arrow>
             <IconButton type="submit">
               <CheckIcon />

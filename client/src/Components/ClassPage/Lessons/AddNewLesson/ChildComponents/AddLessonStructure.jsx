@@ -48,8 +48,6 @@ const AddLessonStructure = ({ data, setData }) => {
 
     const selectedTopics = Object.keys(topicMappings).filter(topic => topicMappings[topic])
     // console.log(selectedTopics)
-    // This is just a duct-tape solution to prevent the form from submitting if some fields are empty
-    // will try to use MUI form validation later or the required prop for text fields in future to prevent invalid form submissions
     if ((data['lessonTitle'] === '' && lessonTitle === '') || selectedTopics.length === 0) {
       alert('Please fill in all fields')
       return

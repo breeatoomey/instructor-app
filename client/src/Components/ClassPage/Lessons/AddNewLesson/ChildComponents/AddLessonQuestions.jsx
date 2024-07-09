@@ -1,6 +1,7 @@
 import { Box, TextField, MenuItem } from '@mui/material'
 import { useState } from 'react'
 import MultipleChoice from './MultipleChoice'
+import TrueFalse from './TrueFalse'
 
 const questionFormats = [
   'Multiple Choice',
@@ -12,7 +13,7 @@ const questionFormats = [
 
 const AddLessonQuestions = ({
   title,
-  questionLimit,
+  // questionLimit,
   topics,
   setEnteredQuestions,
   prevQuestionData,
@@ -26,20 +27,20 @@ const AddLessonQuestions = ({
       case 'Multiple Choice':
         return (
           <MultipleChoice
-            // enteredQuestions={enteredQuestions}
             setEnteredQuestions={setEnteredQuestions}
-            // limit={questionLimit}
             topics={topics}
-            prevData={prevQuestionData}
             setQuestionData={setQuestionData}
             resetQuestionFormat={setQuestionFormat}
           />
         )
       case 'True/False':
         return (
-          <Box>
-            <h1>True/False</h1>
-          </Box>
+          <TrueFalse
+            setEnteredQuestions={setEnteredQuestions}
+            topics={topics}
+            setQuestionData={setQuestionData}
+            resetQuestionFormat={setQuestionFormat}
+          />
         )
       case 'Matching':
         return (
@@ -72,8 +73,6 @@ const AddLessonQuestions = ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: '#EAECE9',
-        // height: '80vh',
         '& > :not(style)': {
           m: 1,
           width: '50ch',
@@ -81,7 +80,6 @@ const AddLessonQuestions = ({
       }}
     >
       <h1>{title}</h1>
-      <div></div> {/* TODO: uhhh definitely fix this with some css later */}
       <TextField
         select
         label="Question Format"
