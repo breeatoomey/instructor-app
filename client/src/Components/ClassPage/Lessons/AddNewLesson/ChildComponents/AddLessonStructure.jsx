@@ -1,22 +1,13 @@
 import { useState } from 'react'
-import {
-  Box,
-  TextField,
-  MenuItem,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  Button,
-} from '@mui/material'
+import { Box, TextField, MenuItem, Button } from '@mui/material'
+import CheckboxSelect from './CheckBoxSelect'
 
 const AddLessonStructure = ({ data, setData }) => {
-  // TODO: add everything to a form and then add a save button that sends data back to AddLessons
   const [lessonTitle, setLessonTitle] = useState(data['lessonTitle'])
   const [numQuestions, setNumQuestions] = useState(data['numQuestions'])
-  const [topics, setTopics] = useState(data['selectedTopics'])
+  const [topicsToDisplay, setTopicsToDisplay] = useState([])
 
   // temporary solution. will fetch topics from the server later
-  const questionOptions = [...Array.from({ length: 10 }, (v, i) => i + 1)]
   const mockTopics = [
     'Lists',
     'Strings',
@@ -26,33 +17,17 @@ const AddLessonStructure = ({ data, setData }) => {
     'Classes',
     'Recursion',
   ]
-  const mappings = () => {
-    return mockTopics.map(topic => {
-      if (topics.includes(topic)) {
-        return { [topic]: true }
-      }
-      return { [topic]: false }
-    })
-  }
-
-  const [topicMappings, setTopicMappings] = useState(Object.assign({}, ...mappings()))
-
-  const handleTopicChange = event => {
-    setTopicMappings({ ...topicMappings, [event.target.name]: event.target.checked })
-  }
 
   const submitForm = event => {
     event.preventDefault()
-    // console.log(lessonTitle)
-    // console.log(data['selectedTopics'])
-
-    const selectedTopics = Object.keys(topicMappings).filter(topic => topicMappings[topic])
+    console.log(lessonTitle)
+    console.log(data['selectedTopics'])
     // console.log(selectedTopics)
-    if ((data['lessonTitle'] === '' && lessonTitle === '') || selectedTopics.length === 0) {
+    if ((data['lessonTitle'] === '' && lessonTitle === '') || topicsToDisplay.length === 0) {
       alert('Please fill in all fields')
       return
     }
-    setData({ ...data, lessonTitle, numQuestions, selectedTopics })
+    setData({ ...data, lessonTitle, numQuestions, selectedTopics: topicsToDisplay })
     // console.log(data)
     alert('Lesson structure saved. You can proceed to the next step safely.')
     // console.log('submitted form')
@@ -93,7 +68,7 @@ const AddLessonStructure = ({ data, setData }) => {
           onChange={event => setNumQuestions(event.target.value)}
           required
         >
-          {questionOptions.map((number, index) => {
+          {[...Array.from({ length: 10 }, (v, i) => i + 1)].map((number, index) => {
             return (
               <MenuItem key={index} value={number}>
                 {number}
@@ -101,24 +76,12 @@ const AddLessonStructure = ({ data, setData }) => {
             )
           })}
         </TextField>
-        <TextField select id="relevant-topics-select" label="relevant topics">
-          <FormGroup>
-            {mockTopics.map((topic, index) => (
-              <MenuItem key={index}>
-                <FormControlLabel
-                  label={topic}
-                  control={
-                    <Checkbox
-                      checked={topicMappings[topic]}
-                      onChange={handleTopicChange}
-                      name={topic}
-                    />
-                  }
-                />
-              </MenuItem>
-            ))}
-          </FormGroup>
-        </TextField>
+
+        <CheckboxSelect
+          topics={mockTopics}
+          topicsPreviouslySelected={data['selectedTopics']}
+          setTopicsToDisplay={setTopicsToDisplay}
+        />
         <Button type="submit" variant="contained">
           Save
         </Button>

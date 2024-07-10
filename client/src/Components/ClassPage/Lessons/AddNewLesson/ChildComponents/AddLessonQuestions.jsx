@@ -1,11 +1,11 @@
 import { Box, TextField, MenuItem } from '@mui/material'
 import { useState } from 'react'
 import MultipleChoice from './MultipleChoice'
-import TrueFalse from './TrueFalse'
+// import TrueFalse from './TrueFalse'
 
 const questionFormats = [
   'Multiple Choice',
-  'True/False',
+  // 'True/False',
   'Matching',
   'Fill in the Blank',
   'Rearrange the Code',
@@ -16,11 +16,10 @@ const AddLessonQuestions = ({
   // questionLimit,
   topics,
   setEnteredQuestions,
-  prevQuestionData,
+  // prevQuestionData,
   setQuestionData,
 }) => {
   const [questionFormat, setQuestionFormat] = useState('')
-  // const [enteredQuestions, setEnteredQuestions] = useState(0)
   // const [localData, setLocalData] = useState({}) // have this so when user comes back to this page, they can see their previous work? or can just pass it from the parent component?
   const handlePageBasedOnQuestionFormat = format => {
     switch (format) {
@@ -33,15 +32,15 @@ const AddLessonQuestions = ({
             resetQuestionFormat={setQuestionFormat}
           />
         )
-      case 'True/False':
-        return (
-          <TrueFalse
-            setEnteredQuestions={setEnteredQuestions}
-            topics={topics}
-            setQuestionData={setQuestionData}
-            resetQuestionFormat={setQuestionFormat}
-          />
-        )
+      // case 'True/False':
+      //   return (
+      //     <TrueFalse
+      //       setEnteredQuestions={setEnteredQuestions}
+      //       topics={topics}
+      //       setQuestionData={setQuestionData}
+      //       resetQuestionFormat={setQuestionFormat}
+      //     />
+      //   )
       case 'Matching':
         return (
           <Box>

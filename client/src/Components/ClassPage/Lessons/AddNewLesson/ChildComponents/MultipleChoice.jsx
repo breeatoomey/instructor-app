@@ -1,19 +1,16 @@
 import {
   Box,
   TextField,
-  MenuItem,
   IconButton,
   Tooltip,
   FormControl,
   FormLabel,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
   RadioGroup,
   Radio,
 } from '@mui/material'
 import { useState, useEffect } from 'react'
 import CheckIcon from '@mui/icons-material/Check'
+import CheckboxSelect from './CheckBoxSelect'
 
 const AnswerChoices = ({ answers, setAnswers }) => {
   const [answerOne, setAnswerOne] = useState('Answer 1')
@@ -89,28 +86,11 @@ const MultipleChoice = ({ setEnteredQuestions, topics, setQuestionData, resetQue
     answerFour: '',
     correctAnswer: '',
   })
-
-  const mappings = () => {
-    return topics.map(topic => {
-      return { [topic]: false }
-    })
-  }
-
-  const [topicMappings, setTopicMappings] = useState(Object.assign({}, ...mappings()))
-
-  const handleTopicChange = event => {
-    setTopicMappings({ ...topicMappings, [event.target.name]: event.target.checked })
-  }
+  const [topicsToDisplay, setTopicsToDisplay] = useState([])
 
   const saveQuestion = event => {
     event.preventDefault()
     console.log('saving question')
-    const relevantTopics = Object.keys(topicMappings).filter(topic => topicMappings[topic])
-    if (relevantTopics.length === 0) {
-      alert('Please select at least one topic')
-      return
-    }
-
     setEnteredQuestions(prev => prev + 1)
     setQuestionData(prevData => [
       ...prevData,
@@ -119,7 +99,7 @@ const MultipleChoice = ({ setEnteredQuestions, topics, setQuestionData, resetQue
         questionType: 'Multiple Choice',
         prompt,
         codeSnippet,
-        topicsCovered: relevantTopics,
+        topicsCovered: topicsToDisplay,
         answers,
       },
     ])
@@ -132,8 +112,7 @@ const MultipleChoice = ({ setEnteredQuestions, topics, setQuestionData, resetQue
       answerFour: '',
       correctAnswer: '',
     })
-
-    setTopicMappings(Object.assign({}, ...mappings()))
+    setTopicsToDisplay([])
     resetQuestionFormat('')
     // console.log('question data:')
     // console.log(prevData)
@@ -162,32 +141,7 @@ const MultipleChoice = ({ setEnteredQuestions, topics, setQuestionData, resetQue
           required
           fullWidth
         />
-
-        {/* make this a component since we're reusing pretty much the same code from LessonStructure for selecting topics */}
-        <TextField
-          select
-          id="relevant-topics-for-question-select"
-          label="Topics Covered"
-          helperText="Please select at least one topic"
-          fullWidth
-        >
-          <FormGroup>
-            {topics.map((topic, index) => (
-              <MenuItem key={index}>
-                <FormControlLabel
-                  label={topic}
-                  control={
-                    <Checkbox
-                      checked={topicMappings[topic]}
-                      onChange={handleTopicChange}
-                      name={topic}
-                    />
-                  }
-                />
-              </MenuItem>
-            ))}
-          </FormGroup>
-        </TextField>
+        <CheckboxSelect topics={topics} setTopicsToDisplay={setTopicsToDisplay} />
         <AnswerChoices answers={answers} setAnswers={setAnswers} />
         <Box>
           <Tooltip title="Save Question" arrow>
@@ -201,5 +155,5 @@ const MultipleChoice = ({ setEnteredQuestions, topics, setQuestionData, resetQue
   )
 }
 
-export { AnswerChoices }
+// export { AnswerChoices }
 export default MultipleChoice
