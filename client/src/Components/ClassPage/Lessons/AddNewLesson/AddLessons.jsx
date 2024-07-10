@@ -39,7 +39,7 @@ const AddLessons = () => {
               title={dataFromStepOne['lessonTitle']}
               topics={dataFromStepOne['selectedTopics']}
               setEnteredQuestions={setEnteredQuestions}
-              prevQuestionData={dataFromStepTwo}
+              // prevQuestionData={dataFromStepTwo}
               setQuestionData={setdataFromStepTwo}
             />
           </>
@@ -54,6 +54,9 @@ const AddLessons = () => {
     <>
       {handlePageBasedOnStep(activeStep)}
       <LessonStepper activeStep={activeStep} setActiveStep={setActiveStep} />
+      {console.log('dataFromStepOne')}
+      {console.log(dataFromStepOne)}
+      {console.log('')}
       {console.log('dataFromStepTwo')}
       {console.log(dataFromStepTwo)}
     </>
