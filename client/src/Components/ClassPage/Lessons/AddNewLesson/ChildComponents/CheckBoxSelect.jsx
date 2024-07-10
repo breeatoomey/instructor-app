@@ -3,15 +3,13 @@ import { useState, useEffect } from 'react'
 
 const CheckboxSelect = ({ topics, topicsPreviouslySelected, setTopicsToDisplay }) => {
   const mappings = () => {
-    if (topicsPreviouslySelected) {
-      return topics.map(topic => {
-        return { [topic]: topicsPreviouslySelected.includes(topic) }
-      })
-    }
-    return topics.map(topic => ({ [topic]: false }))
+    const initialMappings = topicsPreviouslySelected
+      ? topics.map(topic => ({ [topic]: topicsPreviouslySelected.includes(topic) }))
+      : topics.map(topic => ({ [topic]: false }))
+    return Object.assign({}, ...initialMappings)
   }
 
-  const [topicMappings, setTopicMappings] = useState(Object.assign({}, ...mappings()))
+  const [topicMappings, setTopicMappings] = useState(mappings())
 
   useEffect(() => {
     const selectedTopics = Object.keys(topicMappings).filter(topic => topicMappings[topic])
