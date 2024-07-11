@@ -84,7 +84,7 @@ const Lessons = () => {
           flexWrap: 'wrap',
           justifyContent: 'center',
           backgroundColor: '#EAECE9',
-          // height: '100vh',
+          height: '100vh',
           padding: 7,
         }}
       >
