@@ -90,7 +90,7 @@ const MultipleChoice = ({ setEnteredQuestions, topics, setQuestionData, resetQue
 
   const saveQuestion = event => {
     event.preventDefault()
-    console.log('saving question')
+    // console.log('saving question')
     setEnteredQuestions(prev => prev + 1)
     setQuestionData(prevData => [
       ...prevData,

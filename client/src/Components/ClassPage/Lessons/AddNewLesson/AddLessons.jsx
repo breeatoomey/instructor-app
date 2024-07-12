@@ -54,11 +54,11 @@ const AddLessons = () => {
     <>
       {handlePageBasedOnStep(activeStep)}
       <LessonStepper activeStep={activeStep} setActiveStep={setActiveStep} />
-      {console.log('dataFromStepOne')}
+      {/* {console.log('dataFromStepOne')}
       {console.log(dataFromStepOne)}
       {console.log('')}
       {console.log('dataFromStepTwo')}
-      {console.log(dataFromStepTwo)}
+      {console.log(dataFromStepTwo)} */}
     </>
   )
 }

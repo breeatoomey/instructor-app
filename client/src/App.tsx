@@ -1,23 +1,17 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useState } from 'react'
 import Login from './Components/Login/Login.jsx'
-// import Dashboard from './Components/DashBoard/Dashboard.js'
 import Home from './Components/DashBoard/DashboardComponents/Home.tsx'
 import StudentPerformance from './Components/ClassPage/Pages/StudentPerformance.jsx'
 import Setting from './Components/DashBoard/DashboardComponents/Setting.js'
-// import Navbar from './Components/DashBoard/Navbar.jsx'
 import React from 'react'
-// import Sidebar from './Components/ClassPage/Sidebar.jsx'
 import Lessons from './Components/ClassPage/Lessons/Lessons.jsx'
 import AddLessons from './Components/ClassPage/Lessons/AddNewLesson/AddLessons.jsx'
 import EditKnowledgeGraph from './Components/ClassPage/KnowledgeGraph/EditKnowledgeGraph.jsx'
 import Roster from './Components/ClassPage/Pages/Roster.jsx'
 import ClassroomSettings from './Components/ClassPage/Pages/ClassroomSettings.jsx'
-
-// stuff using MUI
 import Navbar from './Components/NewNavbar.jsx'
 import Lesson from './Components/ClassPage/Lessons/Lesson.jsx'
-
 const items = [
   {
     id: 'cmsi-1010',
@@ -44,6 +38,10 @@ function App() {
   // TODO: once user is authenticated, fetch user data and pass in relevant data to components as props?
   return (
     <div className="App">
+      {/* <Helmet>
+        <link rel="icon" type="image/png" href={logo} />
+        <title>Codelingo</title>
+      </Helmet> */}
       <Router>
         {isAuthenticated ? <Navbar /> : ''}
         <Routes>

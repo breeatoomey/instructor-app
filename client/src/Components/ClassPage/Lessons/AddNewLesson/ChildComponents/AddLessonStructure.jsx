@@ -20,8 +20,8 @@ const AddLessonStructure = ({ data, setData }) => {
 
   const submitForm = event => {
     event.preventDefault()
-    console.log(lessonTitle)
-    console.log(data['selectedTopics'])
+    // console.log(lessonTitle)
+    // console.log(data['selectedTopics'])
     // console.log(selectedTopics)
     if ((data['lessonTitle'] === '' && lessonTitle === '') || topicsToDisplay.length === 0) {
       alert('Please fill in all fields')
